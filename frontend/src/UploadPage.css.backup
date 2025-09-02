@@ -4,22 +4,21 @@
 }
 
 .upload-page-container h2 {
-    text-align: center;
+    text-align: center !important;
 }
 .upload-page-container p {
-    text-align: center;
+    text-align: center !important;
     color: var(--text-color-dark);
     margin-top: -0.5rem;
-    margin-bottom: 2rem;
 }
 
 .upload-form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    align-items: center; /* Center form elements horizontally */
+    align-items: center !important; /* Center form elements horizontally */
     max-width: 600px; /* Limit form width for better organization */
-    margin: 0 auto; /* Center the form within the glass container */}
+    margin: 0 auto !important; /* Center the form within the glass container */}
 
 .form-group {
     display: flex;
@@ -29,7 +28,7 @@
 .form-group label {
     margin-bottom: 1rem;
     font-weight: 600;
-    color: #fff;
+    color: #fff !important; /* DEBUG: Red color to make visible */
 }
 
 .form-group textarea {
@@ -40,10 +39,9 @@
     font-size: 1rem;
     color: var(--text-color);
     background-color: rgba(0, 0, 0, 0.2);
-    border: 1px solid var(--glass-border-color);
     border-radius: 10px;
     resize: vertical;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .form-group textarea:focus {
@@ -56,8 +54,8 @@
     border: 2px dashed var(--glass-border-color);
     border-radius: 10px;
     padding: 2rem;
-    text-align: center;
-    cursor: pointer;
+    text-align: center !important;
+    
     transition: all 0.3s ease;
     position: relative;
 }
@@ -75,7 +73,7 @@
     width: 100%;
     height: 100%;
     opacity: 0;
-    cursor: pointer;
+    
 }
 
 .drop-zone-icon {
@@ -87,6 +85,29 @@
     color: var(--text-color-dark);
 }
 .drop-zone-prompt .file-types {
+
+/* FileDropZone Component Styles */
+.file-drop-zone-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%; /* Full width within the form */
+    max-width: 500px; /* Limit width for better visual balance */
+    margin: 0 auto !important; /* Center the container horizontally */
+    align-items: center !important; /* Center content within the container */
+}
+
+.drop-zone-label {
+    font-weight: 600;
+    color: #fff !important; /* DEBUG: Red color to make visible */
+    margin-bottom: 1rem;
+    text-align: center !important; /* Center the labels */
+    font-size: 1.2rem; /* Larger labels to match heading hierarchy */
+    width: 100%; /* Full width for proper centering */
+    display: block !important; background-color: #ffff00 !important; /* DEBUG: Yellow background */ /* Block display for proper centering */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Add subtle shadow for better visibility */
+    letter-spacing: 0.5px; /* Slight letter spacing for better readability */
+}
     font-size: 0.8rem;
 }
 
@@ -99,7 +120,7 @@
 
 .file-list h4 {
     margin: 0 0 0.5rem 0;
-    color: #fff;
+    color: #fff !important; /* DEBUG: Red color to make visible */
 }
 
 .file-list ul {
@@ -115,15 +136,15 @@
 }
 
 .cta-button {
-    display: inline-block;
+    
     padding: 1rem 2.5rem;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #fff;
+    color: #fff !important; /* DEBUG: Red color to make visible */
     background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    border: none;
+    
     border-radius: 50px;
-    cursor: pointer;
+    
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -166,7 +187,7 @@
 }
 
 .message {
-    text-align: center;
+    text-align: center !important;
     margin-top: 1.5rem;
     padding: 1rem;
     border-radius: 10px;
@@ -213,7 +234,6 @@
 .progress-updates {
     margin-top: 1.5rem;
     background-color: rgba(0, 0, 0, 0.2);
-    border: 1px solid var(--glass-border-color);
     border-radius: 10px;
     padding: 1rem;
     max-height: 300px;
@@ -222,7 +242,7 @@
 
 .progress-updates h4 {
     margin: 0 0 1rem 0;
-    color: #fff;
+    color: #fff !important; /* DEBUG: Red color to make visible */
     font-size: 1.1rem;
 }
 
@@ -235,11 +255,11 @@
 .progress-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center !important;
     padding: 0.75rem;
-    border-radius: 8px;
+    border-radius: 50px;
     font-size: 0.9rem;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .progress-item.progress-info {
@@ -297,3 +317,133 @@
 }
 /* FORCE REBUILD - LABEL CENTERING FIXES */
 /* CRITICAL FIX: Force production build to include label centering */
+.FORCE-REBUILD-CSS { color: red; }
+/* Clean CSS version for perfect centering */
+
+
+/* Upload Section Headings */
+.upload-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    border: 1px solid var(--glass-border-color);
+    
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.clickable-upload-section {
+    
+    transition: all 0.3s ease;
+}
+
+.clickable-upload-section:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.clickable-upload-section:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.section-heading {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.5px;
+    padding-left: 0;
+}
+
+.section-description {
+    margin: 0 0 1.5rem 0;
+    text-align: center;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    line-height: 1.4;
+    opacity: 0.9;
+    padding-left: 0;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: white !important;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    
+    font-weight: 600;
+    transition: all 0.3s ease;
+    
+    font-size: 1rem;
+    text-align: center;
+    
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.file-input-hidden {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+
+/* Enhanced visual cues for clickable upload sections */
+.upload-section {
+    position: relative;
+    
+    transition: all 0.3s ease;
+    border: 2px dashed transparent;
+}
+
+.upload-section:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.upload-section:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Add subtle animation to indicate interactivity */
+.upload-section::before {
+    content: "👆";
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.2rem;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.upload-section:hover::before {
+    opacity: 1;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.file-input-hidden {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+
+.upload-section:hover::before {
+    opacity: 1;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}

@@ -97,17 +97,6 @@
     align-items: center !important; /* Center content within the container */
 }
 
-.drop-zone-label {
-    font-weight: 600;
-    color: #fff !important; /* DEBUG: Red color to make visible */
-    margin-bottom: 1rem;
-    text-align: center !important; /* Center the labels */
-    font-size: 1.2rem; /* Larger labels to match heading hierarchy */
-    width: 100%; /* Full width for proper centering */
-    display: block !important; background-color: #ffff00 !important; /* DEBUG: Yellow background */ /* Block display for proper centering */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Add subtle shadow for better visibility */
-    letter-spacing: 0.5px; /* Slight letter spacing for better readability */
-}
     font-size: 0.8rem;
 }
 
@@ -430,86 +419,12 @@
     50% { transform: scale(1.1); }
 }
 
-
-.cta-button {
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    color: white !important;
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
-    
-    font-weight: 600;
-    transition: all 0.3s ease;
-    
-    text-decoration: none;
-    
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.cta-button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 170, 255, 0.4);
-}
-
 .file-input-hidden {
     position: absolute;
     opacity: 0;
     width: 1px;
     height: 1px;
     pointer-events: none;
-}
-
-.cta-button {
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    color: white !important;
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
-    
-    font-weight: 600;
-    transition: all 0.3s ease;
-    
-    text-decoration: none;
-    
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.cta-button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 170, 255, 0.4);
-}
-
-/* Enhanced visual cues for clickable upload sections */
-.upload-section {
-    position: relative;
-    
-    transition: all 0.3s ease;
-    border: 2px dashed transparent;
-}
-
-.upload-section:hover {
-    border-color: rgba(255, 255, 255, 0.3);
-    background-color: rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
-
-.upload-section:active {
-    transform: translateY(0);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-}
-
-/* Add subtle animation to indicate interactivity */
-.upload-section::before {
-    content: "👆";
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-size: 1.2rem;
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
 }
 
 .upload-section:hover::before {
