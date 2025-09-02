@@ -1,0 +1,619 @@
+.jobs-page-container {
+    width: 100%;
+}
+
+.jobs-page-container h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.job-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem;
+}
+
+.job-card h3 {
+    font-size: 1.1rem;
+    margin: 0 0 1rem 0;
+    line-height: 1.4;
+    color: #fff;
+    flex-grow: 1;
+}
+
+.job-card-meta {
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-color-dark);
+}
+
+.processing-indicator {
+    color: var(--primary-color);
+    font-weight: 600;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.details-button {
+    align-self: flex-start;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.details-button:hover {
+    background: linear-gradient(135deg, #23a6d5, #1985a5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(35, 166, 213, 0.4);
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: var(--primary-color);
+}
+
+/* Styles for JobDetailsPage */
+.job-details-container {
+    width: 100%;
+}
+
+.job-summary-card, .detailed-resume-card {
+    margin-bottom: 2rem;
+}
+
+/* Candidate Summary Table */
+.candidate-summary-table {
+    overflow-x: auto;
+}
+
+.candidate-summary-table table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.candidate-summary-table th, .candidate-summary-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--glass-border-color);
+}
+
+.candidate-summary-table th {
+    font-size: 0.9rem;
+    color: var(--text-color-dark);
+    font-weight: 600;
+}
+
+.candidate-summary-table td {
+    font-size: 0.95rem;
+}
+
+.candidate-summary-table tbody tr {
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.candidate-summary-table tbody tr:hover {
+    background-color: var(--glass-bg);
+}
+
+.candidate-summary-table tbody tr.selected {
+    background-color: rgba(0, 170, 255, 0.15);
+    border-left: 3px solid var(--primary-color);
+}
+
+.score-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+.score-badge.large {
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+.score-badge.high { background: linear-gradient(135deg, #23d5ab, #19a585); }
+.score-badge.medium-high { background: linear-gradient(135deg, #23a6d5, #1985a5); }
+.score-badge.medium { background: linear-gradient(135deg, #ee7752, #e73c7e); }
+.score-badge.low { background: linear-gradient(135deg, #898989, #5c5c5c); }
+
+
+/* Detailed Analysis Cards */
+.detailed-resumes-list h3 {
+    margin-top: 3rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--glass-border-color);
+}
+
+.detailed-resume-card {
+    padding: 2rem;
+}
+
+.detailed-resume-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--glass-border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.interview-hub {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.interview-status-text {
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    white-space: nowrap;
+}
+
+.action-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.action-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.interview-button,
+.feedback-button {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0, 170, 255, 0.3);
+}
+
+.interview-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 170, 255, 0.4);
+    background: linear-gradient(135deg, #0099ee 0%, #0077aa 100%);
+}
+
+.feedback-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}
+
+.detailed-resume-header h3.candidate-name {
+    margin: 0.5rem 0 0 0;
+    font-size: 2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    line-height: 1.1;
+}
+
+.candidate-bucket-tag {
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #888; /* Default color */
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+/* Bucket-specific colors */
+.candidate-bucket-tag.bucket-top-tier { background-color: #23d5ab; }
+.candidate-bucket-tag.bucket-strong-fit { background-color: #23a6d5; }
+.candidate-bucket-tag.bucket-good-fit { background-color: #23a6d5; }
+.candidate-bucket-tag.bucket-potential-fit { background-color: #ee7752; }
+.candidate-bucket-tag.bucket-lacks-experience { background-color: #e73c7e; }
+.candidate-bucket-tag.bucket-not-a-fit { background-color: #898989; }
+.candidate-bucket-tag.bucket-default { background-color: #5c5c5c; }
+.candidate-bucket-tag.book-the-call {
+    background: rgba(255, 165, 0, 0.15);
+    color: #ffab40;
+    border: 1px solid rgba(255, 165, 0, 0.3);
+}
+
+.reasoning {
+    font-style: italic;
+    color: var(--text-color-dark);
+    text-align: center;
+    margin: -0.5rem 0 1.5rem 0;
+}
+
+.summary-points, .timeline, .logistics, .skill-matrix {
+    margin-bottom: 1.5rem;
+}
+
+.summary-points h4, .timeline h4, .logistics h4 {
+    margin-bottom: 0.75rem;
+    color: #fff;
+    border-bottom: 1px solid var(--glass-border-color);
+    padding-bottom: 0.5rem;
+}
+
+.summary-points ul, .timeline ul, .logistics ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.summary-points li, .timeline li, .logistics li {
+    padding: 0.5rem 0;
+    line-height: 1.6;
+}
+
+/* Skill Matrix */
+.skill-matrix {
+    border-top: 1px solid var(--glass-border-color);
+    padding-top: 1.5rem;
+    display: flex;
+    gap: 2rem;
+}
+
+.skill-column {
+    flex: 1;
+}
+
+.skill-column h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+}
+.skill-column.matches h4 { color: #23d5ab; }
+.skill-column.gaps h4 { color: #e73c7e; }
+
+.skill-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.skill-column li {
+    background-color: rgba(0,0,0,0.2);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.resumes-list h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.resume-card {
+    background-color: rgba(0,0,0,0.15);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border-color);
+    transition: transform 0.2s ease-in-out;
+}
+.resume-card:hover {
+    transform: scale(1.02);
+}
+
+.resume-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.resume-header h4 {
+    margin: 0;
+    color: #fff;
+}
+
+.resume-score {
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+}
+
+.resume-score.high { background: linear-gradient(90deg, #00C9FF, #92FE9D); color: #004d00; }
+.resume-score.medium { background: linear-gradient(90deg, #FFDDE1, #EE9CA7); color: #5d2f2f; }
+.resume-score.low { background: linear-gradient(90deg, #898989, #5c5c5c); color: #fff; }
+
+
+.resume-summary p, .resume-skills p {
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+.resume-skills {
+    margin-top: 1rem;
+}
+
+.job-card-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.delete-button {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    min-width: 100px;
+}
+
+.delete-button:hover:not(:disabled) {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+}
+
+.delete-button:disabled {
+    background: linear-gradient(135deg, #7f8c8d, #6c7b7d);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.detailed-resume-header h3.candidate-name {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    line-height: 1.2;
+}
+
+.header-actions .score-badge.large {
+    background: #1e3a8a; /* A deep blue color */
+    border: 1px solid rgba(59, 130, 246, 0.5); /* A slightly lighter blue border */
+    color: #eff6ff; /* A very light blue/white text */
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.reasoning {
+    margin-bottom: 2rem;
+    color: var(--text-color-dark);
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.summary-points {
+    margin-bottom: 2rem;
+}
+
+.summary-points ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.summary-points ul li {
+    padding-left: 1.5em;
+    position: relative;
+    color: var(--text-color);
+}
+
+.summary-points ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.skill-matrix {
+    display: grid;
+    gap: 2rem;
+}
+
+.skill-column {
+    flex: 1;
+}
+
+.skill-column h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+}
+.skill-column.matches h4 { color: #23d5ab; }
+.skill-column.gaps h4 { color: #e73c7e; }
+
+.skill-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.skill-column li {
+    background-color: rgba(0,0,0,0.2);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.action-button.schedule-interview {
+    background: linear-gradient(90deg, rgba(228,93,156,1) 0%, rgba(123,104,238,1) 100%);
+    border: none;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 100px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.action-button.schedule-interview:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+} 
+
+/* Processing Status Styles */
+.processing-status {
+    text-align: center;
+    padding: 3rem 2rem;
+    margin: 2rem 0;
+}
+
+.processing-content {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.processing-content h2 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.processing-content p {
+    color: var(--text-color-dark);
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.spinner {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.processing-details {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid var(--glass-border-color);
+}
+
+.processing-details p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.processing-details strong {
+    color: var(--text-color);
+}
+
+/* Processing Progress Styles */
+.processing-progress {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: rgba(35, 166, 213, 0.1);
+    border: 1px solid rgba(35, 166, 213, 0.3);
+}
+
+.progress-content {
+    text-align: center;
+}
+
+.progress-content p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: var(--text-color-dark);
+}
+
+.progress-content strong {
+    color: var(--primary-color);
+}
+
+.progress-spinner {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    animation: spin 2s linear infinite;
+} 
