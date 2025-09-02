@@ -65,7 +65,7 @@ const FileDropZone = ({
                         multiple={multiple}
                         accept={accept}
                         onChange={handleFileChange}
-                        className="file-input"
+                        className="file-input-hidden"
                     />
                 </div>
             </div>
