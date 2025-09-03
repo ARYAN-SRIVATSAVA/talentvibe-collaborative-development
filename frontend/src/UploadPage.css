@@ -28,7 +28,7 @@
 .form-group label {
     margin-bottom: 1rem;
     font-weight: 600;
-    color: #fff !important; /* DEBUG: Red color to make visible */
+    color: #fff ;
 }
 
 .form-group textarea {
@@ -109,7 +109,7 @@
 
 .file-list h4 {
     margin: 0 0 0.5rem 0;
-    color: #fff !important; /* DEBUG: Red color to make visible */
+    color: #fff ;
 }
 
 .file-list ul {
@@ -129,7 +129,7 @@
     padding: 1rem 2.5rem;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #fff !important; /* DEBUG: Red color to make visible */
+    color: #fff ;
     background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
     
     border-radius: 50px;
@@ -231,7 +231,7 @@
 
 .progress-updates h4 {
     margin: 0 0 1rem 0;
-    color: #fff !important; /* DEBUG: Red color to make visible */
+    color: #fff ;
     font-size: 1.1rem;
 }
 
