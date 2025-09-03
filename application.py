@@ -12,7 +12,7 @@ import fitz
 import docx
 import psutil
 import gc
-import textract
+# import textract
 import threading
 import time
 from collections import deque
@@ -848,6 +848,7 @@ def process_resumes_background(file_data, job_description, job_id):
                                     temp_file.write(file_stream)
                                     temp_file_path = temp_file.name
                                 
+                                import textract
                                 content = textract.process(temp_file_path).decode('utf-8')
                                 os.unlink(temp_file_path)
                                 
