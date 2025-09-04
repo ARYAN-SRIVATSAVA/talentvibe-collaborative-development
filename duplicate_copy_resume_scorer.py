@@ -1010,7 +1010,13 @@ Use this information to enhance your scoring. If keywords are found but sections
             
             IMPORTANT: Use the current date as September 2025 for all calculations.
             
-            Calculate TOTAL YEARS of PROFESSIONAL WORK EXPERIENCE from the resume text and compare with required total years of professional work experience from the job description.
+            Calculate TOTAL YEARS of PROFESSIONAL WORK EXPERIENCE from the resume text.
+            
+            CRITICAL MATHEMATICAL ACCURACY REQUIREMENTS:
+            - Be mathematically precise. Double-check all calculations.
+            - Use a calculator for division: 35/12 = 2.9167, NOT 2.17
+            - Verify your math: if total_months = 35, then total_years = 35/12 = 2.9167 years
+            - Common mistake: 35/12 ≠ 2.17 (this is WRONG)
             
             INSTRUCTIONS:
             - Parse the resume text to identify all work experience entries
@@ -1022,19 +1028,19 @@ Use this information to enhance your scoring. If keywords are found but sections
             - DO NOT round down unless dates are truly unclear or ambiguous. Use exact calculations for clear dates
             - Calculate exact months and years: Total years = total_months / 12
             
-            EXPERIENCE DIFFERENCE CALCULATION EXAMPLE:
+            EXPERIENCE CALCULATION EXAMPLE:
                 - Resume shows: "November 2020-may 2021" (7 months) + "march 2020-December 2020" (10 months) + "January 2025-June 2025" (6 months)
-                - Total: 23 months = 23/12 = 1.92 years
-                - Total years of experience: 1.92 years
+                - Total: 7 + 10 + 6 = 23 months = 23/12 = 1.9167 years
+                - Total years of experience: 1.9167 years
             
             Resume Text:
             {resume_text}
             
             Return ONLY a JSON object with:
             {{
-                "total_months": <number>,
-                "total_years": <number>,
-                "calculation_details": "<detailed explanation showing calculation for each entry following the example format>"
+                "total_months": <exact number of months>,
+                "total_years": <exact years calculated as total_months/12>,
+                "calculation_details": "<detailed explanation ending with: Total: X months = X/12 = Y years>"
             }}
             """
             
@@ -1061,19 +1067,29 @@ Use this information to enhance your scoring. If keywords are found but sections
             
             result = json.loads(content)
             
-            # Validate and recalculate if needed
+            # Mathematical validation and recalculation
             if "calculation_details" in result:
-                # Extract total from calculation_details and recalculate
                 import re
                 details = result["calculation_details"]
-                # Look for "Total: X months = X/12 = Y years" pattern
-                total_match = re.search(r"Total: (\d+) months = \d+/12 = (\d+\.\d+) years", details)
-                if total_match:
-                    correct_months = int(total_match.group(1))
-                    correct_years = float(total_match.group(2))
-                    result["total_months"] = correct_months
-                    result["total_years"] = correct_years
-                    print(f"  🔧 Corrected experience: {correct_years:.2f} years ({correct_months} months)")
+                
+                # Extract the sum calculation: "Total: 25 + 2 + 2 + 6 = 35 months"
+                sum_match = re.search(r"Total: ([\d\s\+\=]+) = (\d+) months", details)
+                if sum_match:
+                    # Get the sum expression: "25 + 2 + 2 + 6"
+                    sum_expression = sum_match.group(1).replace(" ", "").replace("=", "")
+                    
+                    # Calculate the actual sum
+                    numbers = [int(x) for x in sum_expression.split("+")]
+                    actual_total_months = sum(numbers)
+                    
+                    # Calculate correct years
+                    actual_total_years = actual_total_months / 12
+                    
+                    # Override with correct values
+                    result["total_months"] = actual_total_months
+                    result["total_years"] = actual_total_years
+                    
+                    print(f"  🔧 Math validation: {actual_total_years:.2f} years ({actual_total_months} months)")
             return result
             
         except Exception as e:
@@ -1316,19 +1332,29 @@ Use this information to enhance your scoring. If keywords are found but sections
             
             result = json.loads(content)
             
-            # Validate and recalculate if needed
+            # Mathematical validation and recalculation
             if "calculation_details" in result:
-                # Extract total from calculation_details and recalculate
                 import re
                 details = result["calculation_details"]
-                # Look for "Total: X months = X/12 = Y years" pattern
-                total_match = re.search(r"Total: (\d+) months = \d+/12 = (\d+\.\d+) years", details)
-                if total_match:
-                    correct_months = int(total_match.group(1))
-                    correct_years = float(total_match.group(2))
-                    result["total_months"] = correct_months
-                    result["total_years"] = correct_years
-                    print(f"  🔧 Corrected experience: {correct_years:.2f} years ({correct_months} months)")
+                
+                # Extract the sum calculation: "Total: 25 + 2 + 2 + 6 = 35 months"
+                sum_match = re.search(r"Total: ([\d\s\+\=]+) = (\d+) months", details)
+                if sum_match:
+                    # Get the sum expression: "25 + 2 + 2 + 6"
+                    sum_expression = sum_match.group(1).replace(" ", "").replace("=", "")
+                    
+                    # Calculate the actual sum
+                    numbers = [int(x) for x in sum_expression.split("+")]
+                    actual_total_months = sum(numbers)
+                    
+                    # Calculate correct years
+                    actual_total_years = actual_total_months / 12
+                    
+                    # Override with correct values
+                    result["total_months"] = actual_total_months
+                    result["total_years"] = actual_total_years
+                    
+                    print(f"  🔧 Math validation: {actual_total_years:.2f} years ({actual_total_months} months)")
             return result
             
         except Exception as e:
