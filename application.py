@@ -393,8 +393,8 @@ def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, file
         advanced_comments = extract_comments_only(advanced_result)
         
         # Get current analysis for base data
-        current_analysis = analyze_resume_with_ai(job_description, resume_text, filename)
-        current_data = json.loads(current_analysis)
+        # Create standalone analysis data without calling old function
+        current_data = create_standalone_analysis_data(filename, advanced_result)
         
         # Add advanced analysis data (comments only)
         current_data["advanced_analysis"] = {

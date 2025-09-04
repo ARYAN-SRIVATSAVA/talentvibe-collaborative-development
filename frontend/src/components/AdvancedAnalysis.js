@@ -1,3 +1,4 @@
+import React from 'react';
 // Advanced Analysis Component for JobDetailsPage.js
 const AdvancedAnalysis = ({ advancedAnalysis }) => {
     if (!advancedAnalysis) return null;

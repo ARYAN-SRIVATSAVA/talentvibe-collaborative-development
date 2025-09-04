@@ -2,7 +2,8 @@ import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom';
 import FeedbackModal from './components/FeedbackModal';
 import InterviewModal from './components/InterviewModal';
-import AdvancedAnalysis from './components/AdvancedAnalysis';import './JobsPage.css';
+import AdvancedAnalysis from './components/AdvancedAnalysis';
+import './JobsPage.css';
 
 const SkillMatrix = ({ skills }) => (
     <div className="skill-matrix">
