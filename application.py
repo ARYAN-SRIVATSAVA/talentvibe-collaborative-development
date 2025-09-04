@@ -407,8 +407,15 @@ def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, file
             final_score_value = final_score_value.get("final_weighted_score", current_data.get("fit_score", 70))
         current_data["fit_score"] = int(final_score_value)
         
-        # Add advanced analysis data (comments only)
+        # Add advanced analysis data (comments + scoring details)
         current_data["advanced_analysis"] = {
+            # Phase 1: Section Weights
+            "section_weights": advanced_result.get("section_weights", {}),
+            # Phase 2: Subfield Scores
+            "subfield_scores": advanced_result.get("subfield_scores", {}),
+            # Phase 3: Final Score Details
+            "final_score_details": advanced_result.get("final_score", {}),
+            # Basic Info
             "job_level": advanced_result.get("job_level", "unknown"),
             "experience_education_ratio": advanced_result.get("experience_education_ratio", 0.0),
             "processing_time": advanced_result.get("processing_time", 0.0),
