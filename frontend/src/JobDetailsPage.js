@@ -186,7 +186,7 @@ const JobDetailsPage = () => {
                 const shouldContinue = (
                     totalResumes === 0 || // No resumes yet, keep checking
                     analyzedResumes < totalResumes || // Some resumes not analyzed yet
-                    stableCountRef.current < 10 // Keep checking for at least 30 seconds (10 * 3s)
+                    stableCountRef.current < 40 // Keep checking for at least 2 minutes (40 * 3s = 120s)
                 );
                 
                 if (shouldContinue) {
