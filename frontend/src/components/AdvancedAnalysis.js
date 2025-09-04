@@ -74,33 +74,45 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
         
         return (
             <div className="subfield-scores">
-                {Object.entries(subfieldScores).map(([section, data]) => (
-                    <div key={section} className="subfield-section">
-                        <h4 className="subfield-header">
-                            {section.charAt(0).toUpperCase() + section.slice(1)}
-                        </h4>
-                        <div className="subfield-items">
-                            {typeof data === 'object' && Object.entries(data).map(([field, value]) => {
-                                if (field === 'comment' || field === 'cross_section_analysis') return null;
-                                if (typeof value === 'number') {
-                                    return (
-                                        <div key={field} className="subfield-item">
-                                            <span className="subfield-name">{field.replace(/_/g, ' ')}:</span>
-                                            <span className="subfield-score">{value}/2</span>
-                                            <div className="score-bar">
-                                                <div 
-                                                    className="score-fill" 
-                                                    style={{ width: `${(value / 2) * 100}%` }}
-                                                ></div>
+                {Object.entries(subfieldScores).map(([section, data]) => {
+                    // Skip sections that are empty or only contain comments
+                    if (!data || typeof data !== 'object') return null;
+                    
+                    // Check if section has any numeric scores (not just comments)
+                    const hasNumericScores = Object.entries(data).some(([field, value]) => 
+                        field !== 'comment' && field !== 'cross_section_analysis' && typeof value === 'number'
+                    );
+                    
+                    if (!hasNumericScores) return null;
+                    
+                    return (
+                        <div key={section} className="subfield-section">
+                            <h4 className="subfield-header">
+                                {section.charAt(0).toUpperCase() + section.slice(1)}
+                            </h4>
+                            <div className="subfield-items">
+                                {Object.entries(data).map(([field, value]) => {
+                                    if (field === 'comment' || field === 'cross_section_analysis') return null;
+                                    if (typeof value === 'number') {
+                                        return (
+                                            <div key={field} className="subfield-item">
+                                                <span className="subfield-name">{field.replace(/_/g, ' ')}:</span>
+                                                <span className="subfield-score">{value}/2</span>
+                                                <div className="score-bar">
+                                                    <div 
+                                                        className="score-fill" 
+                                                        style={{ width: `${(value / 2) * 100}%` }}
+                                                    ></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    );
-                                }
-                                return null;
-                            })}
+                                        );
+                                    }
+                                    return null;
+                                })}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         );
     };
@@ -212,32 +224,6 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
                                 {typeof advancedAnalysis.overall_assessment === 'string' 
                                     ? advancedAnalysis.overall_assessment
                                     : JSON.stringify(advancedAnalysis.overall_assessment, null, 2)
-                                }
-                            </div>
-                        </div>
-                    )}
-                    
-                    {/* Candidate Experience */}
-                    {advancedAnalysis.candidate_experience && (
-                        <div className="analysis-item">
-                            <h3 className="analysis-subtitle">👤 Candidate Experience</h3>
-                            <div className="candidate-experience">
-                                {typeof advancedAnalysis.candidate_experience === 'string' 
-                                    ? advancedAnalysis.candidate_experience
-                                    : JSON.stringify(advancedAnalysis.candidate_experience, null, 2)
-                                }
-                            </div>
-                        </div>
-                    )}
-                    
-                    {/* Job Requirements */}
-                    {advancedAnalysis.job_requirements && (
-                        <div className="analysis-item">
-                            <h3 className="analysis-subtitle">📋 Job Requirements</h3>
-                            <div className="job-requirements">
-                                {typeof advancedAnalysis.job_requirements === 'string' 
-                                    ? advancedAnalysis.job_requirements
-                                    : JSON.stringify(advancedAnalysis.job_requirements, null, 2)
                                 }
                             </div>
                         </div>
