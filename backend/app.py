@@ -4,6 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, emit
 import os
 from .ai_service import analyze_resume_with_ai
+import sys
+sys.path.append("..")
+from application import analyze_resume_with_advanced_ai
 import json
 import fitz  # PyMuPDF
 import docx  # python-docx
@@ -240,7 +243,7 @@ def process_resume_with_progress(job_id, resume_file, job_description):
             return None, 'Duplicate content'
 
         emit_progress_update(job_id, f"Analyzing {filename} with AI...", 'processing')
-        analysis_text = analyze_resume_with_ai(job_description, content)
+        analysis_text = analyze_resume_with_advanced_ai(job_description, content, filename)
         analysis_json = json.loads(analysis_text)
         
         # Handle case where AI returns "Name Not Found"
