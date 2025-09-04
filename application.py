@@ -1001,7 +1001,7 @@ def process_resumes_background(file_data, job_description, job_id):
                 # Analyze with AI
                 try:
                     print(f"Starting AI analysis for {filename}")
-                    analysis_text = analyze_resume_with_ai(job_description, content, filename)
+                    analysis_text = analyze_resume_with_advanced_ai(job_description, content, filename)
                     print(f"AI analysis completed for {filename}")
                     
                     try:
