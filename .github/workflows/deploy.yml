@@ -77,6 +77,7 @@ jobs:
         
         # Copy backend files
         cp application.py deployment/
+        cp duplicate_copy_resume_scorer.py deployment/
         cp requirements.txt deployment/
         cp -r backend deployment/
         cp -r .ebextensions deployment/
