@@ -401,7 +401,11 @@ def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, file
         current_analysis = analyze_resume_with_ai(job_description, resume_text, filename)
         current_data = json.loads(current_analysis)
         # Replace fit_score with advanced analysis final_score
-        current_data["fit_score"] = int(advanced_result.get("final_score", current_data.get("fit_score", 70)))
+        # Extract final_score from the dictionary
+        final_score_value = advanced_result.get("final_score", {})
+        if isinstance(final_score_value, dict):
+            final_score_value = final_score_value.get("final_weighted_score", current_data.get("fit_score", 70))
+        current_data["fit_score"] = int(final_score_value)
         
         # Add advanced analysis data (comments only)
         current_data["advanced_analysis"] = {

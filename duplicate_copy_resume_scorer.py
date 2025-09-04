@@ -1061,17 +1061,6 @@ Use this information to enhance your scoring. If keywords are found but sections
             
             result = json.loads(content)
             
-            
-            # Check if there's a mismatch between JSON values and calculation_details
-            if "calculation_details" in result:
-                parsed_values = self._parse_calculation_details(result["calculation_details"])
-                
-                # If parsed values are different from JSON values, use parsed values
-                if parsed_values["total_months"] != result.get("total_months", 0) or parsed_values["total_years"] != result.get("total_years", 0):
-                    
-                    result["total_months"] = parsed_values["total_months"]
-                    result["total_years"] = parsed_values["total_years"]
-            
             return result
             
         except Exception as e:
