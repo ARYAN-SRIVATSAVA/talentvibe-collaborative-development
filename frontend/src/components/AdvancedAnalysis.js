@@ -1,7 +1,58 @@
 import React from 'react';
 
 const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
-    // Always render the component to prevent tree-shaking
+    // Helper function to format detailed reasoning
+    const formatDetailedReasoning = (reasoning) => {
+        if (!reasoning) return null;
+        
+        // If it's a string, try to parse it as JSON
+        let parsedReasoning;
+        if (typeof reasoning === 'string') {
+            try {
+                parsedReasoning = JSON.parse(reasoning);
+            } catch (e) {
+                return <div className="reasoning-text">{reasoning}</div>;
+            }
+        } else {
+            parsedReasoning = reasoning;
+        }
+        
+        if (!parsedReasoning || typeof parsedReasoning !== 'object') {
+            return <div className="reasoning-text">{reasoning}</div>;
+        }
+        
+        return (
+            <div className="detailed-reasoning">
+                {Object.entries(parsedReasoning).map(([section, data]) => (
+                    <div key={section} className="reasoning-section">
+                        <h4 className="section-header">
+                            {section.charAt(0).toUpperCase() + section.slice(1).replace(/_/g, ' ')}
+                        </h4>
+                        {typeof data === 'object' && data.comment ? (
+                            <div className="section-comment">{data.comment}</div>
+                        ) : typeof data === 'string' ? (
+                            <div className="section-comment">{data}</div>
+                        ) : (
+                            <div className="section-comment">{JSON.stringify(data, null, 2)}</div>
+                        )}
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
+    // Helper function to format processing time
+    const formatProcessingTime = (time) => {
+        if (!time) return 'N/A';
+        return `${parseFloat(time).toFixed(1)}s`;
+    };
+
+    // Helper function to format job level
+    const formatJobLevel = (level) => {
+        if (!level) return 'N/A';
+        return level.charAt(0).toUpperCase() + level.slice(1);
+    };
+
     return (
         <div className="advanced-analysis-section">
             <div className="section-title">🔍 Advanced AI Analysis</div>
@@ -10,61 +61,64 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
                 <div className="no-data">No advanced analysis data available</div>
             ) : (
                 <div className="advanced-content">
-                    {/* Job Level */}
-                    {advancedAnalysis.job_level && (
-                        <div className="analysis-item">
-                            <strong>Job Level:</strong> {advancedAnalysis.job_level}
+                    {/* Summary Information */}
+                    <div className="analysis-summary">
+                        <div className="summary-item">
+                            <span className="summary-label">Job Level:</span>
+                            <span className="summary-value">{formatJobLevel(advancedAnalysis.job_level)}</span>
                         </div>
-                    )}
-                    
-                    {/* Processing Time */}
-                    {advancedAnalysis.processing_time && (
-                        <div className="analysis-item">
-                            <strong>Processing Time:</strong> {advancedAnalysis.processing_time}s
+                        <div className="summary-item">
+                            <span className="summary-label">Processing Time:</span>
+                            <span className="summary-value">{formatProcessingTime(advancedAnalysis.processing_time)}</span>
                         </div>
-                    )}
-                    
-                    {/* Experience Education Ratio */}
-                    {advancedAnalysis.experience_education_ratio && (
-                        <div className="analysis-item">
-                            <strong>Experience/Education Ratio:</strong> {advancedAnalysis.experience_education_ratio}
+                        <div className="summary-item">
+                            <span className="summary-label">Experience/Education Ratio:</span>
+                            <span className="summary-value">{advancedAnalysis.experience_education_ratio || 'N/A'}</span>
                         </div>
-                    )}
+                    </div>
                     
-                    {/* Detailed Reasoning */}
+                    {/* Detailed Analysis */}
                     {advancedAnalysis.detailed_reasoning && (
                         <div className="analysis-item">
-                            <strong>Detailed Analysis:</strong>
-                            <div className="reasoning-content">
-                                {typeof advancedAnalysis.detailed_reasoning === 'string' 
-                                    ? advancedAnalysis.detailed_reasoning
-                                    : JSON.stringify(advancedAnalysis.detailed_reasoning, null, 2)
+                            <h3 className="analysis-subtitle">📊 Detailed Analysis</h3>
+                            {formatDetailedReasoning(advancedAnalysis.detailed_reasoning)}
+                        </div>
+                    )}
+                    
+                    {/* Overall Assessment */}
+                    {advancedAnalysis.overall_assessment && (
+                        <div className="analysis-item">
+                            <h3 className="analysis-subtitle">🎯 Overall Assessment</h3>
+                            <div className="overall-assessment">
+                                {typeof advancedAnalysis.overall_assessment === 'string' 
+                                    ? advancedAnalysis.overall_assessment
+                                    : JSON.stringify(advancedAnalysis.overall_assessment, null, 2)
                                 }
                             </div>
                         </div>
                     )}
                     
-                    {/* Section Weights Comments */}
-                    {advancedAnalysis.section_weights && (
+                    {/* Candidate Experience */}
+                    {advancedAnalysis.candidate_experience && (
                         <div className="analysis-item">
-                            <strong>Section Analysis:</strong>
-                            <div className="section-content">
-                                {typeof advancedAnalysis.section_weights === 'string' 
-                                    ? advancedAnalysis.section_weights
-                                    : JSON.stringify(advancedAnalysis.section_weights, null, 2)
+                            <h3 className="analysis-subtitle">👤 Candidate Experience</h3>
+                            <div className="candidate-experience">
+                                {typeof advancedAnalysis.candidate_experience === 'string' 
+                                    ? advancedAnalysis.candidate_experience
+                                    : JSON.stringify(advancedAnalysis.candidate_experience, null, 2)
                                 }
                             </div>
                         </div>
                     )}
                     
-                    {/* Subfield Scores Comments */}
-                    {advancedAnalysis.subfield_scores && (
+                    {/* Job Requirements */}
+                    {advancedAnalysis.job_requirements && (
                         <div className="analysis-item">
-                            <strong>Detailed Scoring:</strong>
-                            <div className="subfield-content">
-                                {typeof advancedAnalysis.subfield_scores === 'string' 
-                                    ? advancedAnalysis.subfield_scores
-                                    : JSON.stringify(advancedAnalysis.subfield_scores, null, 2)
+                            <h3 className="analysis-subtitle">📋 Job Requirements</h3>
+                            <div className="job-requirements">
+                                {typeof advancedAnalysis.job_requirements === 'string' 
+                                    ? advancedAnalysis.job_requirements
+                                    : JSON.stringify(advancedAnalysis.job_requirements, null, 2)
                                 }
                             </div>
                         </div>
