@@ -28,12 +28,22 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
                         <h4 className="section-header">
                             {section.charAt(0).toUpperCase() + section.slice(1).replace(/_/g, ' ')}
                         </h4>
+                        
+                        {/* Main comment */}
                         {typeof data === 'object' && data.comment ? (
                             <div className="section-comment">{data.comment}</div>
                         ) : typeof data === 'string' ? (
                             <div className="section-comment">{data}</div>
                         ) : (
                             <div className="section-comment">{JSON.stringify(data, null, 2)}</div>
+                        )}
+                        
+                        {/* Cross-section analysis */}
+                        {typeof data === 'object' && data.cross_section_analysis && (
+                            <div className="cross-section-analysis">
+                                <h5 className="cross-section-header">🔍 Cross-Section Analysis</h5>
+                                <div className="cross-section-content">{data.cross_section_analysis}</div>
+                            </div>
                         )}
                     </div>
                 ))}

@@ -273,7 +273,7 @@ Resume Content:
 Please provide your analysis in the following JSON format:
 {{
     "candidate_name": "Extract name from resume or 'Name Not Found'",
-    "fit_score": 85,
+    "fit_score": int(advanced_result.get("final_score", 85)),
     "bucket": "⚡ Book-the-Call",
     "reasoning": "Brief explanation of why this candidate fits or doesn't fit",
     "summary_points": [
@@ -386,7 +386,7 @@ def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, file
         # Import the advanced scorer
         from duplicate_copy_resume_scorer import ResumeScorer
         
-        print(f"Starting advanced AI analysis for {filename}")
+        print(f"🚀 STARTING ADVANCED AI ANALYSIS FOR {filename} - VERSION 2.0")
         
         # Initialize the advanced scorer
         scorer = ResumeScorer()
@@ -400,6 +400,8 @@ def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, file
         # Get current analysis for base data
         current_analysis = analyze_resume_with_ai(job_description, resume_text, filename)
         current_data = json.loads(current_analysis)
+        # Replace fit_score with advanced analysis final_score
+        current_data["fit_score"] = int(advanced_result.get("final_score", current_data.get("fit_score", 70)))
         
         # Add advanced analysis data (comments only)
         current_data["advanced_analysis"] = {

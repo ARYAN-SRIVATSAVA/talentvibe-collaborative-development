@@ -916,7 +916,13 @@ Use this information to enhance your scoring. If keywords are found but sections
                     if len(evidence_summary) > 200:
                         evidence_summary = evidence_summary[:197] + "..."
                     
-                    enhanced_comment = f"{original_comment} CROSS-SECTION ANALYSIS: Found {len(found_keywords)} relevant keywords ({keyword_summary}). Evidence: {evidence_summary}"
+                    enhanced_comment = f"{original_comment}"
+                    
+                    # Add cross-section analysis as separate section
+                    cross_section_analysis = f"CROSS-SECTION ANALYSIS: Found {len(found_keywords)} relevant keywords ({keyword_summary}). Evidence: {evidence_summary}"
+                    
+                    # Store both main comment and cross-section analysis
+                    subfield_scores[section]["cross_section_analysis"] = cross_section_analysis
                     
                     subfield_scores[section]['comment'] = enhanced_comment
                     

@@ -911,3 +911,29 @@
         padding: 0.75rem;
     }
 }
+
+/* Cross-Section Analysis Styles */
+.cross-section-analysis {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    border-left: 3px solid #ffa500;
+    border-top: 1px solid rgba(255, 165, 0, 0.2);
+}
+
+.cross-section-header {
+    color: #ffa500;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cross-section-content {
+    color: var(--text-color-dark);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    font-style: italic;
+}
