@@ -393,8 +393,8 @@ def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, file
         advanced_comments = extract_comments_only(advanced_result)
         
         # Get current analysis for base data
-        # Create standalone analysis data without calling old function
-        current_data = create_standalone_analysis_data(filename, advanced_result)
+        current_analysis = analyze_resume_with_ai(job_description, resume_text, filename)
+        current_data = json.loads(current_analysis)
         
         # Add advanced analysis data (comments only)
         current_data["advanced_analysis"] = {
@@ -413,25 +413,67 @@ def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, file
     except Exception as e:
         print(f"Advanced analysis failed for {filename}: {e}")
         # Fallback to current system
-        return create_fallback_analysis(filename, f"Advanced analysis failed: {e}")
+        return analyze_resume_with_ai(job_description, resume_text, filename)
 
 def create_standalone_analysis_data(filename: str, advanced_result: dict) -> dict:
-    """Create standalone analysis data without calling old AI function"""
+    """Create standalone analysis data using actual advanced analysis results"""
     # Extract candidate name from filename as fallback
     candidate_name = filename.split(".")[0].replace("_", " ").replace("-", " ")
     
-    # Create basic analysis structure with advanced data
+    # Use actual advanced analysis results
+    final_score = advanced_result.get("final_score", 75)
+    if isinstance(final_score, dict):
+        final_score = final_score.get("final_weighted_score", 75)
+    if not isinstance(final_score, (int, float)):
+        final_score = 75
+    
+    job_level = advanced_result.get("job_level", "unknown")
+    
+    # Determine bucket based on actual score
+    if final_score > 90:
+        bucket = "🚀 Green-Room Rocket"
+    elif final_score >= 80:
+        bucket = "⚡ Book-the-Call"
+    elif final_score >= 65:
+        bucket = "🛠️ Bench Prospect"
+    else:
+        bucket = "🗄️ Swipe-Left Archive"
+    
+    # Extract skills from advanced analysis
+    subfield_scores = advanced_result.get("subfield_scores", {})
+    if isinstance(subfield_scores, str):
+        try:
+            import json
+            subfield_scores = json.loads(subfield_scores)
+        except:
+            subfield_scores = {}
+    
+    # Extract skill matches and gaps from advanced analysis
+    matches = []
+    gaps = []
+    if "skills" in subfield_scores:
+        skills_data = subfield_scores["skills"]
+        if isinstance(skills_data, dict):
+            for skill, data in skills_data.items():
+                if isinstance(data, dict) and "comment" in data:
+                    comment = data["comment"].lower()
+                    if any(word in comment for word in ["strong", "excellent", "demonstrates", "proven"]):
+                        matches.append(skill.replace("_", " ").title())
+                    elif any(word in comment for word in ["no", "limited", "missing", "lacks"]):
+                        gaps.append(skill.replace("_", " ").title())
+    
+    # Create analysis structure with real data
     return {
         "candidate_name": candidate_name,
-        "fit_score": 75,  # Default score since we focus on comments
-        "bucket": "🛠️ Bench Prospect",  # Default bucket
-        "reasoning": "Advanced AI analysis completed with detailed comments and reasoning",
+        "fit_score": int(final_score),
+        "bucket": bucket,
+        "reasoning": f"Advanced AI analysis completed. Job level: {job_level}, Score: {final_score}/100",
         "summary_points": [
-            "Advanced AI analysis completed",
-            "Detailed comments and reasoning provided",
-            "Comprehensive evaluation available"
+            f"Advanced AI analysis completed with {final_score}/100 score",
+            f"Job level assessment: {job_level}",
+            "Detailed comments and reasoning provided"
         ],
-        "skill_matrix": {"matches": [], "gaps": []},
+        "skill_matrix": {"matches": matches[:5], "gaps": gaps[:5]},
         "timeline": [],
         "logistics": {
             "compensation": "Not specified",
