@@ -3,7 +3,6 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, emit
 import os
-from .ai_service import analyze_resume_with_ai
 import sys
 sys.path.append("..")
 from application import analyze_resume_with_advanced_ai

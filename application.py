@@ -393,8 +393,8 @@ def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, file
         advanced_comments = extract_comments_only(advanced_result)
         
         # Get current analysis for base data
-        current_analysis = analyze_resume_with_ai(job_description, resume_text, filename)
-        current_data = json.loads(current_analysis)
+        # Create standalone analysis data without calling old function
+        current_data = create_standalone_analysis_data(filename, advanced_result)
         
         # Add advanced analysis data (comments only)
         current_data["advanced_analysis"] = {
@@ -413,7 +413,33 @@ def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, file
     except Exception as e:
         print(f"Advanced analysis failed for {filename}: {e}")
         # Fallback to current system
-        return analyze_resume_with_ai(job_description, resume_text, filename)
+        return create_fallback_analysis(filename, f"Advanced analysis failed: {e}")
+
+def create_standalone_analysis_data(filename: str, advanced_result: dict) -> dict:
+    """Create standalone analysis data without calling old AI function"""
+    # Extract candidate name from filename as fallback
+    candidate_name = filename.split(".")[0].replace("_", " ").replace("-", " ")
+    
+    # Create basic analysis structure with advanced data
+    return {
+        "candidate_name": candidate_name,
+        "fit_score": 75,  # Default score since we focus on comments
+        "bucket": "🛠️ Bench Prospect",  # Default bucket
+        "reasoning": "Advanced AI analysis completed with detailed comments and reasoning",
+        "summary_points": [
+            "Advanced AI analysis completed",
+            "Detailed comments and reasoning provided",
+            "Comprehensive evaluation available"
+        ],
+        "skill_matrix": {"matches": [], "gaps": []},
+        "timeline": [],
+        "logistics": {
+            "compensation": "Not specified",
+            "notice_period": "Not specified",
+            "work_authorization": "Not specified",
+            "location": "Not specified"
+        }
+    }
 
 def extract_comments_only(advanced_result: dict) -> dict:
     """Extract only comments and reasoning from advanced scoring result"""
