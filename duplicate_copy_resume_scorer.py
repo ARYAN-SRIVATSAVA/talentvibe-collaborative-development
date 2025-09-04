@@ -1073,7 +1073,7 @@ Use this information to enhance your scoring. If keywords are found but sections
                     correct_years = float(total_match.group(2))
                     result["total_months"] = correct_months
                     result["total_years"] = correct_years
-                    print(f"  🔧 Corrected experience: {correct_years:.2f} years ({correct_months} months)")            
+                    print(f"  🔧 Corrected experience: {correct_years:.2f} years ({correct_months} months)")
             return result
             
         except Exception as e:
@@ -1328,7 +1328,8 @@ Use this information to enhance your scoring. If keywords are found but sections
                     correct_years = float(total_match.group(2))
                     result["total_months"] = correct_months
                     result["total_years"] = correct_years
-                    print(f"  🔧 Corrected experience: {correct_years:.2f} years ({correct_months} months)")            return result
+                    print(f"  🔧 Corrected experience: {correct_years:.2f} years ({correct_months} months)")
+            return result
             
         except Exception as e:
             return {
