@@ -4,7 +4,7 @@ import time
 import concurrent.futures
 from celery import Celery
 from flask_socketio import emit
-from backend.ai_service import analyze_resume_with_ai
+from application import analyze_resume_with_advanced_ai
 
 # This setup is for local development. It runs tasks synchronously in-memory
 # without needing an external message broker like Redis.
@@ -21,7 +21,7 @@ def analyze_resume_in_worker(resume_data, job_description):
     content = resume_data.get('content')
     
     # Perform the CPU/network-bound analysis
-    analysis_json = analyze_resume_with_ai(content, job_description)
+    analysis_json = analyze_resume_with_advanced_ai(job_description, content, filename)
     
     # Return a dictionary with all data needed by the main thread
     return {
