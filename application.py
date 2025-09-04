@@ -148,6 +148,11 @@ class InterviewQuestion(db.Model):
 def init_database():
     """Initialize database with connection pooling"""
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         with app.app_context():
             db.create_all()
             print("Database initialized successfully")
@@ -157,6 +162,11 @@ def init_database():
 def get_db_session():
     """Get a database session with error handling"""
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         return db.session
     except Exception as e:
         print(f"Database session error: {e}")
@@ -206,6 +216,11 @@ def wait_for_rate_limit():
 def extract_text_from_doc_binary(file_stream):
     """Extract text from .doc binary file without external dependencies"""
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         # Convert binary to string and look for readable text
         # .doc files have text embedded in specific patterns
         binary_str = str(file_stream)
@@ -260,6 +275,11 @@ def analyze_resume_with_ai(job_description, resume_text, filename):
         return create_fallback_analysis(filename, "Rate limit reached")
     
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         # Prepare prompt with better error handling
         prompt = f"""
 You are an expert HR recruiter and technical interviewer. Analyze this resume against the job description and provide a comprehensive assessment.
@@ -317,6 +337,11 @@ Return only valid JSON.
         max_retries = 3
         for attempt in range(max_retries):
             try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                 print(f"OpenAI API attempt {attempt + 1}/{max_retries} for {filename}")
                 response = openai.chat.completions.create(
                     model="gpt-4",
@@ -330,6 +355,11 @@ Return only valid JSON.
                 
                 # Validate JSON response
                 try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                     parsed_json = json.loads(analysis_text)
                     print(f"AI analysis successful for {filename} - Score: {parsed_json.get('fit_score', 'N/A')}")
                     return analysis_text
@@ -378,6 +408,11 @@ Return only valid JSON.
 def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, filename: str):
     """Enhanced analysis using advanced scoring system - comments only"""
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         # Import the advanced scorer
         from duplicate_copy_resume_scorer import ResumeScorer
         
@@ -443,6 +478,11 @@ def create_standalone_analysis_data(filename: str, advanced_result: dict) -> dic
     subfield_scores = advanced_result.get("subfield_scores", {})
     if isinstance(subfield_scores, str):
         try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
             import json
             subfield_scores = json.loads(subfield_scores)
         except:
@@ -491,6 +531,11 @@ def extract_comments_only(advanced_result: dict) -> dict:
     subfield_scores = advanced_result.get("subfield_scores", {})
     if isinstance(subfield_scores, str):
         try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
             subfield_scores = json.loads(subfield_scores)
         except json.JSONDecodeError:
             subfield_scores = {}
@@ -575,6 +620,11 @@ def root():
     if request.method == "GET":
         # Serve the React app
         try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
             if not os.path.exists(app.static_folder):
                 return f"""<h1>TalentVibe</h1><p>Static folder not found: {app.static_folder}</p>"""
             
@@ -592,6 +642,11 @@ def root():
 def serve_static(path):
     """Serve static files from React build"""
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         # Check if the file exists
         file_path = os.path.join(app.static_folder, path)
         if not os.path.exists(file_path):
@@ -605,6 +660,11 @@ def serve_static(path):
 def health_check():
     """Simple health check without external dependencies"""
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         # Test database connection only
         db.session.execute(text('SELECT 1'))
         return jsonify({
@@ -628,6 +688,11 @@ def test_endpoint():
 def check_system_resources():
     """Check if system has enough resources"""
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         memory = psutil.virtual_memory()
         cpu_percent = psutil.cpu_percent(interval=1)
         
@@ -650,6 +715,11 @@ def check_system_resources():
 def cleanup_resources():
     """Clean up resources to prevent memory leaks"""
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         # Force garbage collection
         gc.collect()
         
@@ -663,6 +733,11 @@ def cleanup_resources():
 def refresh_session():
     """Refresh the database session safely"""
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         db.session.commit()
         db.session.flush()
     except Exception as e:
@@ -674,11 +749,21 @@ def refresh_session():
 def extract_text_from_file(file_stream):
     """Extract text from various file formats"""
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         filename = file_stream.filename.lower()
         file_stream.seek(0)
         
         if filename.endswith(".pdf"):
             try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                 import fitz
                 doc = fitz.open(stream=file_stream.read(), filetype="pdf")
                 content = ""
@@ -691,6 +776,11 @@ def extract_text_from_file(file_stream):
                 return f"PDF extraction failed for {filename}"
         elif filename.endswith(".docx"):
             try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                 import docx
                 doc = docx.Document(file_stream)
                 content = ""
@@ -714,6 +804,11 @@ def extract_text_from_file(file_stream):
 def check_existing_jd():
     """Check if a job description file already exists in the database"""
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         if "jd_file" not in request.files:
             return jsonify({"error": "No job description file provided"}), 400
         
@@ -723,6 +818,11 @@ def check_existing_jd():
         
         # Extract content from the JD file
         try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
             content = extract_text_from_file(jd_file)
             content_hash = hashlib.sha256(content.encode()).hexdigest()
         except Exception as e:
@@ -764,6 +864,11 @@ def check_existing_jd():
 def check_resume_duplicates():
     """Check for duplicate resumes within a specific job"""
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         if "job_id" not in request.form:
             return jsonify({"error": "Job ID is required"}), 400
         
@@ -786,6 +891,11 @@ def check_resume_duplicates():
                 continue
                 
             try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                 content = extract_text_from_file(resume_file)
                 content_hash = hashlib.sha256(content.encode()).hexdigest()
                 
@@ -825,6 +935,11 @@ def check_resume_duplicates():
 def analyze_resumes():
     """Analyze uploaded resumes with AI - return immediately, process asynchronously"""
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         print("=== Starting analyze_resumes request ===")
         
         # Check request size
@@ -841,6 +956,11 @@ def analyze_resumes():
         
         # Get or create default user with proper session management
         try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
             user = User.query.filter_by(username='default_user').first()
             if not user:
                 user = User(username='default_user')
@@ -871,6 +991,11 @@ def analyze_resumes():
                 for jd_file in job_description_files:
                     if jd_file.filename:
                         try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                             # Extract text from job description file
                             content = extract_text_from_file(jd_file)
                             jd_content.append(f"File: {jd_file.filename}\n{content}")
@@ -886,6 +1011,11 @@ def analyze_resumes():
         
         # Create job with proper session management
         try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
             job = Job(description=job_description, user_id=user.id)
             db.session.add(job)
             db.session.commit()
@@ -918,6 +1048,11 @@ def analyze_resumes():
         for resume_file in resume_files:
             if resume_file.filename:
                 try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                     file_content = resume_file.read()
                     file_size = len(file_content)
                     total_size += file_size
@@ -943,6 +1078,11 @@ def analyze_resumes():
         
         # Start background processing
         try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
             import threading
             processing_thread = threading.Thread(
                 target=process_resumes_background,
@@ -971,10 +1111,20 @@ def process_resumes_background(file_data, job_description, job_id):
     skipped_files = []
     
     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
         print(f"Starting background processing for job {job_id} with {len(file_data)} files")
         
         for i, file_info in enumerate(file_data):
             try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                 print(f"=== Processing file {i+1}/{len(file_data)}: {file_info['filename']} ===")
                 
                 # Check resources every 5 files (files 5, 10, 15, etc.)
@@ -982,6 +1132,11 @@ def process_resumes_background(file_data, job_description, job_id):
                     print(f"Resource check at file {i+1}")
                     gc.collect()
                     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                         resources_ok, resource_status = check_system_resources()
                         print(f"Resource status: {resource_status}")
                         if not resources_ok:
@@ -999,6 +1154,11 @@ def process_resumes_background(file_data, job_description, job_id):
                 # Extract text from file with size limits
                 content = ""
                 try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                     if filename.lower().endswith('.pdf'):
                         pdf_doc = fitz.open(stream=file_stream, filetype='pdf')
                         for page in pdf_doc:
@@ -1015,8 +1175,18 @@ def process_resumes_background(file_data, job_description, job_id):
                     elif filename.lower().endswith('.doc'):
                         # Handle .doc files with robust fallback
                         try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                             # Try to use textract if available
                             try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                                 import tempfile
                                 with tempfile.NamedTemporaryFile(suffix='.doc', delete=False) as temp_file:
                                     temp_file.write(file_stream)
@@ -1038,6 +1208,11 @@ def process_resumes_background(file_data, job_description, job_id):
                             print(f"Textract error for {filename}: {e}")
                             # Fallback: try to extract text from binary
                             try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                                 content = extract_text_from_doc_binary(file_stream)
                             except Exception as fallback_error:
                                 print(f"Fallback extraction failed for {filename}: {fallback_error}")
@@ -1056,6 +1231,11 @@ def process_resumes_background(file_data, job_description, job_id):
                 
                 # Check for duplicates
                 try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                     content_hash = hashlib.sha256(content.encode('utf-8')).hexdigest()
                     with app.app_context():
                         existing = Resume.query.filter_by(job_id=job_id, content_hash=content_hash).first()
@@ -1068,11 +1248,21 @@ def process_resumes_background(file_data, job_description, job_id):
                 
                 # Analyze with AI
                 try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                     print(f"Starting AI analysis for {filename}")
                     analysis_text = analyze_resume_with_advanced_ai(job_description, content, filename)
                     print(f"AI analysis completed for {filename}")
                     
                     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                         analysis_json = json.loads(analysis_text)
                         print(f"JSON parsing successful for {filename}")
                     except json.JSONDecodeError as json_error:
@@ -1087,6 +1277,11 @@ def process_resumes_background(file_data, job_description, job_id):
                     
                     # Save to database
                     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                         print(f"Saving to database: {filename}")
                         with app.app_context():
                             new_resume = Resume(
@@ -1107,6 +1302,11 @@ def process_resumes_background(file_data, job_description, job_id):
                         db.session.rollback()
                         # Try fallback save
                         try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                             print(f"Attempting fallback save for {filename}")
                             fallback_analysis = create_fallback_analysis(filename, "Database save failed")
                             with app.app_context():
@@ -1130,6 +1330,11 @@ def process_resumes_background(file_data, job_description, job_id):
                     print(f"AI Analysis failed for {filename}: {ai_error}")
                     # Save with fallback analysis
                     try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                         print(f"Creating fallback analysis for {filename}")
                         fallback_analysis = create_fallback_analysis(filename, str(ai_error))
                         with app.app_context():
@@ -1160,6 +1365,11 @@ def process_resumes_background(file_data, job_description, job_id):
                 skipped_files.append({'filename': filename, 'reason': str(e)})
                 # Clean up memory even on error
                 try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
                     if "content" in locals(): del content
                     if "file_stream" in locals(): del file_stream
                     if "analysis_text" in locals(): del analysis_text
@@ -1178,6 +1388,11 @@ def process_resumes_background(file_data, job_description, job_id):
         
         # Try to save any processed files even if there was an error
         try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
             print(f"Attempting to save {len(processed_files)} processed files despite error")
             for filename in processed_files:
                 print(f"Successfully processed: {filename}")
@@ -1209,6 +1424,11 @@ def get_job_details(job_id):
     resumes_data = []
     for resume in job.resumes:
         try:
+        # Add current directory to Python path for deployment
+        import sys
+        import os
+        if os.getcwd() not in sys.path:
+            sys.path.insert(0, os.getcwd())
             analysis = json.loads(resume.analysis) if resume.analysis else None
         except:
             analysis = None
