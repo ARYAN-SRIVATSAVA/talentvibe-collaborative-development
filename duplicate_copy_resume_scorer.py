@@ -1061,6 +1061,19 @@ Use this information to enhance your scoring. If keywords are found but sections
             
             result = json.loads(content)
             
+            # Validate and recalculate if needed
+            if "calculation_details" in result:
+                # Extract total from calculation_details and recalculate
+                import re
+                details = result["calculation_details"]
+                # Look for "Total: X months = X/12 = Y years" pattern
+                total_match = re.search(r"Total: (\d+) months = \d+/12 = (\d+\.\d+) years", details)
+                if total_match:
+                    correct_months = int(total_match.group(1))
+                    correct_years = float(total_match.group(2))
+                    result["total_months"] = correct_months
+                    result["total_years"] = correct_years
+                    print(f"  🔧 Corrected experience: {correct_years:.2f} years ({correct_months} months)")            
             return result
             
         except Exception as e:
@@ -1302,7 +1315,20 @@ Use this information to enhance your scoring. If keywords are found but sections
                 content = content[3:-3]
             
             result = json.loads(content)
-            return result
+            
+            # Validate and recalculate if needed
+            if "calculation_details" in result:
+                # Extract total from calculation_details and recalculate
+                import re
+                details = result["calculation_details"]
+                # Look for "Total: X months = X/12 = Y years" pattern
+                total_match = re.search(r"Total: (\d+) months = \d+/12 = (\d+\.\d+) years", details)
+                if total_match:
+                    correct_months = int(total_match.group(1))
+                    correct_years = float(total_match.group(2))
+                    result["total_months"] = correct_months
+                    result["total_years"] = correct_years
+                    print(f"  🔧 Corrected experience: {correct_years:.2f} years ({correct_months} months)")            return result
             
         except Exception as e:
             return {
