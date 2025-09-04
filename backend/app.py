@@ -346,7 +346,7 @@ def analyze_resumes():
     }
 
     # Queue background job using Celery
-    process_job_resumes(job.id, resumes_data, job_description)
+    process_job_resumes.delay(job.id, resumes_data, job_description)
 
     return jsonify({
         'message': f'Queued {len(resumes_data)} resumes for background processing',
