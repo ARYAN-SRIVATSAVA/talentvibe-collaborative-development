@@ -9,7 +9,7 @@ from application import analyze_resume_with_advanced_ai
 # This setup is for local development. It runs tasks synchronously in-memory
 # without needing an external message broker like Redis.
 celery_app = Celery('tasks', broker='memory://', backend='rpc://')
-celery_app.conf.update(task_always_eager=True)
+celery_app.conf.update(task_always_eager=True, task_time_limit=300, task_soft_time_limit=240)
 
 def analyze_resume_in_worker(resume_data, job_description):
     """
