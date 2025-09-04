@@ -13,3 +13,4 @@ celery==5.3.4
 redis==5.0.1
 psutil==6.1.0
 gunicorn==23.0.0
+typing-extensions>=4.0.0

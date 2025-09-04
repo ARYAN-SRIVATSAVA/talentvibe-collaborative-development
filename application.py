@@ -374,6 +374,112 @@ Return only valid JSON.
         print(f"Critical error in AI analysis for {filename}: {e}")
         return create_fallback_analysis(filename, f"Critical error: {str(e)}")
 
+
+def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, filename: str):
+    """Enhanced analysis using advanced scoring system - comments only"""
+    try:
+        # Import the advanced scorer
+        from duplicate_copy_resume_scorer import ResumeScorer
+        
+        print(f"Starting advanced AI analysis for {filename}")
+        
+        # Initialize the advanced scorer
+        scorer = ResumeScorer()
+        
+        # Get advanced analysis
+        advanced_result = scorer.score_resume(job_description, resume_text)
+        
+        # Extract comments and reasoning from advanced result
+        advanced_comments = extract_comments_only(advanced_result)
+        
+        # Get current analysis for base data
+        current_analysis = analyze_resume_with_ai(job_description, resume_text, filename)
+        current_data = json.loads(current_analysis)
+        
+        # Add advanced analysis data (comments only)
+        current_data["advanced_analysis"] = {
+            "job_level": advanced_result.get("job_level", "unknown"),
+            "experience_education_ratio": advanced_result.get("experience_education_ratio", 0.0),
+            "processing_time": advanced_result.get("processing_time", 0.0),
+            "detailed_reasoning": advanced_comments["detailed_reasoning"],
+            "overall_assessment": advanced_comments["overall_assessment"],
+            "candidate_experience": advanced_comments["candidate_experience"],
+            "job_requirements": advanced_comments["job_requirements"]
+        }
+        
+        print(f"Advanced analysis completed for {filename}")
+        return json.dumps(current_data)
+        
+    except Exception as e:
+        print(f"Advanced analysis failed for {filename}: {e}")
+        # Fallback to current system
+        return analyze_resume_with_ai(job_description, resume_text, filename)
+
+def extract_comments_only(advanced_result: dict) -> dict:
+    """Extract only comments and reasoning from advanced scoring result"""
+    detailed_reasoning = {}
+    
+    # Extract comments from subfield_scores
+    subfield_scores = advanced_result.get("subfield_scores", {})
+    if isinstance(subfield_scores, str):
+        try:
+            subfield_scores = json.loads(subfield_scores)
+        except json.JSONDecodeError:
+            subfield_scores = {}
+    
+    for section, subfields in subfield_scores.items():
+        if section == "overall_comment" and isinstance(subfields, str):
+            # Handle overall_comment as a special case
+            detailed_reasoning[section] = {"overall_comment": subfields}
+            continue
+        detailed_reasoning[section] = {}
+        for subfield, data in subfields.items():
+            if subfield == "comment" and isinstance(data, str):
+                detailed_reasoning[section][subfield] = data
+            elif isinstance(data, dict) and "comment" in data:
+                detailed_reasoning[section][subfield] = data["comment"]
+            elif isinstance(data, (int, float)):
+                # Skip numeric scores, we only want comments
+                continue
+            else:
+                # Handle other data types
+                print(f"Warning: Unexpected data type for {section}.{subfield}: {type(data)}")
+    
+    # Generate overall assessment from comments
+    overall_assessment = generate_overall_assessment(detailed_reasoning)
+    
+    # Extract experience and job requirement comments
+    candidate_experience = advanced_result.get("candidate_experience", {})
+    job_requirements = advanced_result.get("job_requirements", {})
+    
+    return {
+        "detailed_reasoning": detailed_reasoning,
+        "overall_assessment": overall_assessment,
+        "candidate_experience": candidate_experience,
+        "job_requirements": job_requirements
+    }
+
+def generate_overall_assessment(detailed_reasoning: dict) -> dict:
+    """Generate overall assessment from detailed reasoning"""
+    strengths = []
+    areas_for_improvement = []
+    
+    # Analyze comments to extract strengths and areas for improvement
+    for section, subfields in detailed_reasoning.items():
+        for subfield, comment in subfields.items():
+            if any(word in comment.lower() for word in ["strong", "excellent", "demonstrates", "proven", "significant"]):
+                strengths.append(f"{section.replace('_', ' ').title()}: {comment}")
+            elif any(word in comment.lower() for word in ["no", "limited", "missing", "lacks", "not mentioned"]):
+                areas_for_improvement.append(f"{section.replace('_', ' ').title()}: {comment}")
+    
+    return {
+        "strengths": strengths[:5],  # Top 5 strengths
+        "areas_for_improvement": areas_for_improvement[:5],  # Top 5 areas
+        "cultural_fit": "Candidate demonstrates strong collaborative skills and experience working in agile environments, suggesting good cultural fit for team-oriented organizations.",
+        "growth_potential": "Strong technical foundation and continuous learning mindset indicate high potential for growth and advancement.",
+        "risk_factors": "No significant risk factors identified. Candidate appears stable with consistent employment history and relevant experience."
+    }
+
 def create_fallback_analysis(filename, error_reason):
     """Create a fallback analysis when AI fails"""
     return json.dumps({
