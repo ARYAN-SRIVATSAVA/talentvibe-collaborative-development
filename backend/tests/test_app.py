@@ -27,7 +27,7 @@ def test_get_data(client):
     json_data = response.get_json()
     assert json_data['message'] == 'Hello from the Flask backend!'
 
-@patch('backend.app.analyze_resume_with_ai')
+@patch('backend.app.analyze_resume_with_advanced_ai')
 def test_analyze_resumes(mock_analyze_resume, client):
     """Test the /api/analyze endpoint for file upload and DB storage."""
     # Arrange: Mock the return value of the AI analysis to be a JSON string
