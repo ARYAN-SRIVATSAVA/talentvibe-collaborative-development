@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import AdvancedAnalysis from './components/AdvancedAnalysis';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './HomePage';
@@ -24,6 +25,10 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        {/* Force AdvancedAnalysis to be included in build */}
+        <div style={{display: 'none'}}>
+          <AdvancedAnalysis advancedAnalysis={{}} />
+        </div>
       </div>
     </Router>
   );

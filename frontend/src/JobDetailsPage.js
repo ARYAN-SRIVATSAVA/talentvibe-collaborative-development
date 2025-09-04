@@ -418,7 +418,7 @@ const JobDetailsPage = () => {
                         {selectedResume.analysis?.skill_matrix && <SkillMatrix skills={selectedResume.analysis.skill_matrix} />}
                         {selectedResume.analysis?.timeline && <Timeline timeline={selectedResume.analysis.timeline} />}
                         {selectedResume.analysis?.logistics && <Logistics logistics={selectedResume.analysis.logistics} />}
-                        {selectedResume.analysis?.advanced_analysis && <AdvancedAnalysis advancedAnalysis={selectedResume.analysis.advanced_analysis} />}                    </div>
+                        <AdvancedAnalysis advancedAnalysis={selectedResume?.analysis?.advanced_analysis || {}} />                    </div>
                 </div>
             )}
 

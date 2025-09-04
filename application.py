@@ -413,7 +413,7 @@ def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, file
     except Exception as e:
         print(f"Advanced analysis failed for {filename}: {e}")
         # Fallback to current system
-        return analyze_resume_with_ai(job_description, resume_text, filename)
+        return create_fallback_analysis(filename, f"Advanced analysis failed: {e}")
 
 def create_standalone_analysis_data(filename: str, advanced_result: dict) -> dict:
     """Create standalone analysis data using actual advanced analysis results"""
