@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom';
 import FeedbackModal from './components/FeedbackModal';
 import InterviewModal from './components/InterviewModal';
-import './JobsPage.css';
+import AdvancedAnalysis from './components/AdvancedAnalysis';import './JobsPage.css';
 
 const SkillMatrix = ({ skills }) => (
     <div className="skill-matrix">
@@ -417,7 +417,7 @@ const JobDetailsPage = () => {
                         {selectedResume.analysis?.skill_matrix && <SkillMatrix skills={selectedResume.analysis.skill_matrix} />}
                         {selectedResume.analysis?.timeline && <Timeline timeline={selectedResume.analysis.timeline} />}
                         {selectedResume.analysis?.logistics && <Logistics logistics={selectedResume.analysis.logistics} />}
-                    </div>
+                        {selectedResume.analysis?.advanced_analysis && <AdvancedAnalysis advancedAnalysis={selectedResume.analysis.advanced_analysis} />}                    </div>
                 </div>
             )}
 
