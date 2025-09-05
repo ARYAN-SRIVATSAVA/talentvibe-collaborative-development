@@ -173,7 +173,8 @@ const JobDetailsPage = () => {
         if (jobDetails) {
             console.log('🔄 Setting up auto-refresh for job details');
             interval = setInterval(() => {
-            setIsProcessing(true); // Show progress indicator immediately                // Check current state
+                setIsAutoRefresh(true);
+            setIsProcessing(true); // Show progress indicator during auto-refresh                // Check current state
                 const totalResumes = jobDetails.resumes?.length || 0;
                 const analyzedResumes = jobDetails.resumes?.filter(r => r.analysis)?.length || 0;
                 
@@ -185,6 +186,7 @@ const JobDetailsPage = () => {
                 // 3. We're in the first few seconds after redirect (allow time for processing to start)
                 
                 const shouldContinue = (
+                    stableCountRef.current < 20 || // Keep checking for at least 1 minute (20 * 3s = 60s) for processing to start
                     totalResumes === 0 || // No resumes yet, keep checking
                     analyzedResumes < totalResumes // Some resumes not analyzed yet
                     // Removed time-based condition - stop when all resumes processed
