@@ -104,6 +104,7 @@ const JobDetailsPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isProcessing, setIsProcessing] = useState(false);
     const [isAnalyzing, setIsAnalyzing] = useState(true); // Show progress continuously
+    const [isAutoRefresh, setIsAutoRefresh] = useState(false);
     const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
     const [selectedResumeForFeedback, setSelectedResumeForFeedback] = useState(null);
     const [isInterviewModalOpen, setIsInterviewModalOpen] = useState(false);
@@ -134,8 +135,8 @@ const JobDetailsPage = () => {
             
             setJobDetails(data);
             
-            // Auto-select first resume if none selected
-            if (!selectedResumeId && data.resumes && data.resumes.length > 0) {
+            // Auto-select first resume ONLY on initial load, not during auto-refresh
+            if (!selectedResumeId && data.resumes && data.resumes.length > 0 && !isAutoRefresh) {
                 setSelectedResumeId(data.resumes[0].id);
             }
             
@@ -185,8 +186,8 @@ const JobDetailsPage = () => {
                 
                 const shouldContinue = (
                     totalResumes === 0 || // No resumes yet, keep checking
-                    analyzedResumes < totalResumes || // Some resumes not analyzed yet
-                    stableCountRef.current < 40 // Keep checking for at least 2 minutes (40 * 3s = 120s)
+                    analyzedResumes < totalResumes // Some resumes not analyzed yet
+                    // Removed time-based condition - stop when all resumes processed
                 );
                 
                 if (shouldContinue) {
@@ -197,6 +198,7 @@ const JobDetailsPage = () => {
                     clearInterval(interval);
                     setIsProcessing(false);
                     setIsAnalyzing(false); // Stop showing progress when complete
+                    setIsAutoRefresh(false); // Clear auto-refresh flag
                 }
             }, 3000); // Poll every 3 seconds
         }
