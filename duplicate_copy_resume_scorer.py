@@ -1028,10 +1028,15 @@ Use this information to enhance your scoring. If keywords are found but sections
             - DO NOT round down unless dates are truly unclear or ambiguous. Use exact calculations for clear dates
             - Calculate exact months and years: Total years = total_months / 12
             
-            EXPERIENCE CALCULATION EXAMPLE:
-                - Resume shows: "November 2020-may 2021" (7 months) + "march 2020-December 2020" (10 months) + "January 2025-June 2025" (6 months)
-                - Total: 7 + 10 + 6 = 23 months = 23/12 = 1.9167 years
-                - Total years of experience: 1.9167 years
+            EXPERIENCE CALCULATION EXAMPLE (FOR REFERENCE ONLY):
+                - EXAMPLE Resume shows: "November 2020-may 2021" (7 months) + "march 2020-December 2020" (10 months) + "January 2025-June 2025" (6 months)
+                - EXAMPLE Total: 7 + 10 + 6 = 23 months = 23/12 = 1.9167 years
+                - EXAMPLE Total years of experience: 1.9167 years
+                
+                ⚠️  IMPORTANT: This is just an EXAMPLE to show the calculation method.
+                ⚠️  Do NOT use these example values (7, 10, 6, 23, 1.9167) in your actual calculation.
+                ⚠️  You must calculate based on the ACTUAL resume text provided below.
+                ⚠️  The example values (23 months, 1.9167 years) are NOT real data - they are just for demonstration.
             
             Resume Text:
             {resume_text}
