@@ -85,7 +85,7 @@ const FileDropZone = ({
                                 <button
                                     type="button"
                                     className="remove-file-btn"
-                                    onClick={() => removeFile(index)}
+                                    onClick={(e) => { e.stopPropagation(); removeFile(index); }}
                                 >
                                     ✕
                                 </button>
