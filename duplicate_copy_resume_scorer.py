@@ -594,10 +594,6 @@ class ResumeScorer:
         print("  🔍 Analyzing job description for section importance...")
         
         # Check cache first for deterministic behavior
-        cache_key = hashlib.md5(job_description.encode()).hexdigest()
-        if cache_key in self.section_weights_cache:
-            print("  ✅ Using cached section weights...")
-            return self.section_weights_cache[cache_key]
         
         try:
             # Step 1: Determine job level first for context-aware interpretation
@@ -605,6 +601,12 @@ class ResumeScorer:
             job_requirement = self._extract_job_experience_requirement(job_description)
             job_level = job_requirement.get("job_level", "entry")
             print(f"  📊 Job level detected: {job_level.upper()}")
+
+            # Create comprehensive cache key including job level for deterministic behavior
+            cache_key = hashlib.md5(f"v2_{job_description}_{job_level}".encode()).hexdigest()
+            if cache_key in self.section_weights_cache:
+                print("  ✅ Using cached section weights...")
+                return self.section_weights_cache[cache_key]
             
             # Step 2: Create context-aware prompt with job level information
             print("  📝 Creating context-aware prompt...")
