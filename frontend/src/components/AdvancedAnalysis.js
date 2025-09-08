@@ -5,13 +5,13 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
     React.useEffect(() => {
         if (advancedAnalysis.detailed_reasoning && typeof advancedAnalysis.detailed_reasoning === "object") {
             const overallCommentKey = Object.keys(advancedAnalysis.detailed_reasoning).find(key => 
-                key.toLowerCase().includes("overall") && key.toLowerCase().includes("comment")
+                key === "overall_comment"
             );
             if (overallCommentKey) {
                 const overallData = advancedAnalysis.detailed_reasoning[overallCommentKey];
                 let overallCommentContent = null;
-                if (typeof overallData === "object" && overallData.comment) {
-                    overallCommentContent = overallData.comment;
+                if (typeof overallData === "object" && (overallData.overall_comment || overallData.comment)) {
+                    overallCommentContent = (overallData.overall_comment || overallData.comment);
                 } else if (typeof overallData === "string") {
                     overallCommentContent = overallData;
                 }
@@ -27,7 +27,7 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
         const filteredReasoning = { ...reasoning };
         if (filteredReasoning) {
             const overallCommentKey = Object.keys(filteredReasoning).find(key => 
-                key.toLowerCase().includes("overall") && key.toLowerCase().includes("comment")
+                key === "overall_comment"
             );
             if (overallCommentKey) {
                 delete filteredReasoning[overallCommentKey];
