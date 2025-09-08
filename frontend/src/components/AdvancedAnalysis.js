@@ -100,45 +100,80 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
     };
 
     const formatSubfieldScores = (subfieldScores) => {
-        if (!subfieldScores || typeof subfieldScores !== 'object') return null;
-        
+        if (!subfieldScores || typeof subfieldScores !== "object") return null;
+
+        // Helper function to get circle style based on score
+        const getCircleStyle = (score) => {
+            let gradient, opacity;
+            
+            if (score >= 1.5) {
+                // Green range: 1.5-2.0
+                gradient = "linear-gradient(135deg, #4ade80, #22c55e)";
+                opacity = 0.6 + ((score - 1.5) / 0.5) * 0.4; // 0.6 to 1.0
+            } else if (score >= 1.0) {
+                // Yellow range: 1.0-1.4
+                gradient = "linear-gradient(135deg, #fbbf24, #f59e0b)";
+                opacity = 0.6 + ((score - 1.0) / 0.4) * 0.4; // 0.6 to 1.0
+            } else {
+                // Red range: 0.0-0.9
+                gradient = "linear-gradient(135deg, #f87171, #ef4444)";
+                opacity = 0.6 + (score / 0.9) * 0.4; // 0.6 to 1.0
+            }
+            
+            return { 
+                background: gradient, 
+                opacity: Math.min(Math.max(opacity, 0.6), 1.0)
+            };
+        };
+
+        // Generate separate tables for each section
         return (
-            <div className="subfield-scores">
+            <div className="subfield-scores-tables">
                 {Object.entries(subfieldScores).map(([section, data]) => {
-                    // Skip sections that are empty or only contain comments
-                    if (!data || typeof data !== 'object') return null;
+                    if (!data || typeof data !== "object") return null;
                     
-                    // Check if section has any numeric scores (not just comments)
-                    const hasNumericScores = Object.entries(data).some(([field, value]) => 
-                        field !== 'comment' && field !== 'cross_section_analysis' && typeof value === 'number'
+                    // Get numeric scores only
+                    const numericScores = Object.entries(data).filter(([field, value]) => 
+                        field !== "comment" && field !== "cross_section_analysis" && typeof value === "number"
                     );
                     
-                    if (!hasNumericScores) return null;
+                    if (numericScores.length === 0) return null;
                     
                     return (
-                        <div key={section} className="subfield-section">
-                            <h4 className="subfield-header">
-                                {section.charAt(0).toUpperCase() + section.slice(1)}
+                        <div key={section} className="subfield-section-table">
+                            <h4 className="subfield-section-title">
+                                {section.charAt(0).toUpperCase() + section.slice(1).replace(/_/g, " ")}
                             </h4>
-                            <div className="subfield-items">
-                                {Object.entries(data).map(([field, value]) => {
-                                    if (field === 'comment' || field === 'cross_section_analysis') return null;
-                                    if (typeof value === 'number') {
-                                        return (
-                                            <div key={field} className="subfield-item">
-                                                <span className="subfield-name">{field.replace(/_/g, ' ')}:</span>
-                                                <span className="subfield-score">{value}/2</span>
-                                                <div className="score-bar">
-                                                    <div 
-                                                        className="score-fill" 
-                                                        style={{ width: `${(value / 2) * 100}%` }}
-                                                    ></div>
-                                                </div>
-                                            </div>
-                                        );
-                                    }
-                                    return null;
-                                })}
+                            <div className="subfield-table-container">
+                                <table className="subfield-table">
+                                    <thead>
+                                        <tr>
+                                            {numericScores.map(([field, value]) => (
+                                                <th key={field} className="subfield-header">
+                                                    {field.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase())}
+                                                </th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            {numericScores.map(([field, value]) => {
+                                                const circleStyle = getCircleStyle(value);
+                                                return (
+                                                    <td key={field} className="subfield-cell">
+                                                        <div 
+                                                            className="subfield-score-circle" 
+                                                            style={circleStyle}
+                                                            title={`${value}/2.0`}
+                                                        >
+                                                            <span className="subfield-score-text">{value}</span>
+                                                        </div>
+                                                    </td>
+                                                );
+                                            })}
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     );

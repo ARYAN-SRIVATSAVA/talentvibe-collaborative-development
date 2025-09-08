@@ -986,6 +986,98 @@
 }
 
 .subfield-scores {
+
+/* New Subfield Scores Tables */
+.subfield-scores-tables {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 1rem 0;
+}
+
+.subfield-section-table {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.subfield-section-title {
+    color: #fff;
+    margin: 0 0 1.5rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    text-align: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.subfield-table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
+.subfield-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.subfield-header {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 1rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    text-transform: capitalize;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 120px;
+}
+
+.subfield-header:last-child {
+    border-right: none;
+}
+
+.subfield-cell {
+    padding: 1.5rem 0.75rem;
+    text-align: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.subfield-cell:last-child {
+    border-right: none;
+}
+
+.subfield-score-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.subfield-score-circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.subfield-score-text {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
