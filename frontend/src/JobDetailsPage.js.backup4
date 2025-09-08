@@ -105,14 +105,6 @@ const JobDetailsPage = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [isAnalyzing, setIsAnalyzing] = useState(true); // Show progress continuously
     const [isAutoRefresh, setIsAutoRefresh] = useState(false);
-    const [overallComment, setOverallComment] = useState(null);
-    // Set up callback for overall comment extraction
-    React.useEffect(() => {
-        window.setOverallComment = setOverallComment;
-        return () => {
-            delete window.setOverallComment;
-        };
-    }, []);
     const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
     const [selectedResumeForFeedback, setSelectedResumeForFeedback] = useState(null);
     const [isInterviewModalOpen, setIsInterviewModalOpen] = useState(false);
@@ -181,8 +173,7 @@ const JobDetailsPage = () => {
         if (jobDetails) {
             console.log('🔄 Setting up auto-refresh for job details');
             interval = setInterval(() => {
-                setIsAutoRefresh(true);
-            setIsProcessing(true); // Show progress indicator during auto-refresh                // Check current state
+            setIsProcessing(true); // Show progress indicator immediately                // Check current state
                 const totalResumes = jobDetails.resumes?.length || 0;
                 const analyzedResumes = jobDetails.resumes?.filter(r => r.analysis)?.length || 0;
                 
@@ -194,7 +185,6 @@ const JobDetailsPage = () => {
                 // 3. We're in the first few seconds after redirect (allow time for processing to start)
                 
                 const shouldContinue = (
-                    stableCountRef.current < 20 || // Keep checking for at least 1 minute (20 * 3s = 60s) for processing to start
                     totalResumes === 0 || // No resumes yet, keep checking
                     analyzedResumes < totalResumes // Some resumes not analyzed yet
                     // Removed time-based condition - stop when all resumes processed
@@ -418,14 +408,8 @@ const JobDetailsPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <p className="reasoning">{overallComment || selectedResume.analysis?.reasoning}</p>
+                        <p className="reasoning">{selectedResume.analysis?.reasoning}</p>
                         
-                        <div className="score-circle-container">
-                            <div className="score-circle">
-                                <span className="score-number">{selectedResume.analysis?.fit_score || "N/A"}</span>
-                                <span className="score-label">/ 100</span>
-                            </div>
-                        </div>
                         <div className="section-title">Summary</div>
                         <div className="summary-points">
                             <ul>

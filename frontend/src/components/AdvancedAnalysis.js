@@ -1,8 +1,38 @@
 import React from 'react';
 
 const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
+    // Extract overall comment and call callback if provided
+    React.useEffect(() => {
+        if (advancedAnalysis.detailed_reasoning && typeof advancedAnalysis.detailed_reasoning === "object") {
+            const overallCommentKey = Object.keys(advancedAnalysis.detailed_reasoning).find(key => 
+                key.toLowerCase().includes("overall") && key.toLowerCase().includes("comment")
+            );
+            if (overallCommentKey) {
+                const overallData = advancedAnalysis.detailed_reasoning[overallCommentKey];
+                let overallCommentContent = null;
+                if (typeof overallData === "object" && overallData.comment) {
+                    overallCommentContent = overallData.comment;
+                } else if (typeof overallData === "string") {
+                    overallCommentContent = overallData;
+                }
+                if (overallCommentContent && window.setOverallComment) {
+                    window.setOverallComment(overallCommentContent);
+                }
+            }
+        }
+    }, [advancedAnalysis.detailed_reasoning]);
     // Helper functions
     const formatDetailedReasoning = (reasoning) => {
+        // Filter out Overall comment section from display
+        const filteredReasoning = { ...reasoning };
+        if (filteredReasoning) {
+            const overallCommentKey = Object.keys(filteredReasoning).find(key => 
+                key.toLowerCase().includes("overall") && key.toLowerCase().includes("comment")
+            );
+            if (overallCommentKey) {
+                delete filteredReasoning[overallCommentKey];
+            }
+        }
         if (!reasoning) return null;
         
         let parsedReasoning;
@@ -22,7 +52,7 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
         
         return (
             <div className="detailed-reasoning">
-                {Object.entries(parsedReasoning).map(([section, data]) => (
+                {Object.entries(filteredReasoning || parsedReasoning).map(([section, data]) => (
                     <div key={section} className="reasoning-section">
                         <h4 className="section-header">
                             {section.charAt(0).toUpperCase() + section.slice(1).replace(/_/g, ' ')}

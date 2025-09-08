@@ -1062,6 +1062,12 @@
 }
 
 .final-score-main {
+
+.score-circle-container {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+}
     display: flex;
     justify-content: center;
     margin-bottom: 2rem;
