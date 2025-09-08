@@ -158,7 +158,7 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
                     return (
                         <div key={section} className="subfield-section-card">
                             <div className="subfield-card-header">
-                                <div className="section-icon">{getSectionIcon(section)}</div>
+                                
                                 <h4 className="subfield-card-title">
                                     {section.charAt(0).toUpperCase() + section.slice(1).replace(/_/g, " ")}
                                 </h4>
