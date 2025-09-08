@@ -8,7 +8,7 @@
 }
 
 .jobs-grid {
-    display: flex;
+    display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
 }
@@ -486,7 +486,7 @@
 }
 
 .skill-matrix {
-    display: flex;
+    display: grid;
     gap: 2rem;
 }
 
@@ -628,10 +628,8 @@
 }
 
 .analysis-summary {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
     margin-bottom: 2rem;
     padding: 1rem;
@@ -728,7 +726,7 @@
 }
 
 .subfield-comments {
-    display: flex;
+    display: grid;
     gap: 0.75rem;
 }
 
@@ -790,10 +788,8 @@
 
 /* Enhanced Advanced Analysis Styles */
 .analysis-summary {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
     margin-bottom: 2rem;
     padding: 1.5rem;
@@ -990,6 +986,8 @@
 }
 
 .subfield-scores {
+    /* Empty block - content moved to subfield-scores-cards */
+}
 
 /* Professional Card-Based Subfield Scores */
 .subfield-scores-cards {
@@ -1038,14 +1036,12 @@
     letter-spacing: 0.5px;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
-
 .subfield-metrics-grid {
     display: flex;
     flex-wrap: wrap;
+    gap: 1.5rem;
     justify-content: flex-start;
     align-items: stretch;
-    gap: 1.5rem;
-}
 
 .subfield-metric-card {
     background: rgba(255, 255, 255, 0.05);
