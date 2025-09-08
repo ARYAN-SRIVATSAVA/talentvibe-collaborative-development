@@ -150,15 +150,7 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
         );
     };
 
-    const formatProcessingTime = (time) => {
-        if (!time) return 'N/A';
-        return `${parseFloat(time).toFixed(1)}s`;
-    };
 
-    const formatJobLevel = (level) => {
-        if (!level) return 'N/A';
-        return level.charAt(0).toUpperCase() + level.slice(1);
-    };
 
     return (
         <div className="advanced-analysis-section">
@@ -168,21 +160,6 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
                 <div className="no-data">No advanced analysis data available</div>
             ) : (
                 <div className="advanced-content">
-                    {/* Summary Information */}
-                    <div className="analysis-summary">
-                        <div className="summary-item">
-                            <span className="summary-label">Job Level:</span>
-                            <span className="summary-value">{formatJobLevel(advancedAnalysis.job_level)}</span>
-                        </div>
-                        <div className="summary-item">
-                            <span className="summary-label">Processing Time:</span>
-                            <span className="summary-value">{formatProcessingTime(advancedAnalysis.processing_time)}</span>
-                        </div>
-                        <div className="summary-item">
-                            <span className="summary-label">Experience/Education Ratio:</span>
-                            <span className="summary-value">{advancedAnalysis.experience_education_ratio || 'N/A'}</span>
-                        </div>
-                    </div>
 
                     {/* Phase 3: Final Score */}
                     {advancedAnalysis.final_score_details && (
