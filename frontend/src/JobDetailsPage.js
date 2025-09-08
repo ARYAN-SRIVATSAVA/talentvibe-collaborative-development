@@ -412,6 +412,12 @@ const JobDetailsPage = () => {
                         </div>
                         <p className="reasoning">{selectedResume.analysis?.reasoning}</p>
                         
+                        <div className="score-circle-container">
+                            <div className="score-circle">
+                                <span className="score-number">{selectedResume.analysis?.fit_score || "N/A"}</span>
+                                <span className="score-label">/ 100</span>
+                            </div>
+                        </div>
                         <div className="section-title">Summary</div>
                         <div className="summary-points">
                             <ul>
