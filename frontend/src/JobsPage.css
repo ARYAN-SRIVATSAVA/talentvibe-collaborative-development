@@ -987,101 +987,169 @@
 
 .subfield-scores {
 
-/* New Subfield Scores Tables */
-.subfield-scores-tables {
+/* Professional Card-Based Subfield Scores */
+.subfield-scores-cards {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    margin: 1rem 0;
+    gap: 2.5rem;
+    margin: 2rem 0;
 }
 
-.subfield-section-table {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1.5rem;
-    backdrop-filter: blur(10px);
+.subfield-section-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
 }
 
-.subfield-section-title {
+.subfield-section-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.subfield-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.section-icon {
+    font-size: 2rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.subfield-card-title {
     color: #fff;
-    margin: 0 0 1.5rem 0;
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
     text-transform: capitalize;
-    text-align: center;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.subfield-table-container {
-    overflow-x: auto;
-    border-radius: 8px;
+.subfield-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
 }
 
-.subfield-table {
-    width: 100%;
-    border-collapse: collapse;
+.subfield-metric-card {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    overflow: hidden;
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
 }
 
-.subfield-header {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    padding: 1rem 0.75rem;
-    font-weight: 600;
+.subfield-metric-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.metric-header {
+    margin-bottom: 1rem;
+}
+
+.metric-label {
+    color: rgba(255, 255, 255, 0.9);
     font-size: 0.9rem;
-    text-align: center;
+    font-weight: 600;
     text-transform: capitalize;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-    min-width: 120px;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+    display: block;
 }
 
-.subfield-header:last-child {
-    border-right: none;
+.metric-score-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.subfield-cell {
-    padding: 1.5rem 0.75rem;
-    text-align: center;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.02);
-}
-
-.subfield-cell:last-child {
-    border-right: none;
-}
-
-.subfield-score-circle {
-    width: 50px;
-    height: 50px;
+.metric-score-circle {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.subfield-score-circle:hover {
-    transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.subfield-score-text {
+.metric-score-circle::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    border-radius: 50%;
+    opacity: 0.1;
+    transform: scale(1.2);
+    filter: blur(10px);
+}
+
+.metric-score-circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.metric-score-text {
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    z-index: 1;
+    position: relative;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .subfield-metrics-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+    
+    .subfield-section-card {
+        padding: 1.5rem;
+    }
+    
+    .subfield-card-title {
+        font-size: 1.2rem;
+    }
+    
+    .metric-score-circle {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .metric-score-text {
+        font-size: 1rem;
+    }
+}
+
+/* New Subfield Scores Tables */
     color: #fff;
     font-weight: 700;
     font-size: 1rem;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin: 1rem 0;
 }
 
 .subfield-section {
