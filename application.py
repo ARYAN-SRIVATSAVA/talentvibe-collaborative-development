@@ -480,7 +480,7 @@ def extract_comments_only(advanced_result: dict) -> dict:
 def generate_overall_assessment(detailed_reasoning: dict) -> dict:
     """Generate overall assessment from detailed reasoning"""
     strengths = []
-    areas_for_improvement = []
+    Shortfall_Areas = []
     
     # Analyze comments to extract strengths and areas for improvement
     for section, subfields in detailed_reasoning.items():
@@ -488,11 +488,11 @@ def generate_overall_assessment(detailed_reasoning: dict) -> dict:
             if any(word in comment.lower() for word in ["strong", "excellent", "demonstrates", "proven", "significant"]):
                 strengths.append(f"{section.replace('_', ' ').title()}: {comment}")
             elif any(word in comment.lower() for word in ["no", "limited", "missing", "lacks", "not mentioned"]):
-                areas_for_improvement.append(f"{section.replace('_', ' ').title()}: {comment}")
+                Shortfall_Areas.append(f"{section.replace('_', ' ').title()}: {comment}")
     
     return {
         "strengths": strengths[:5],  # Top 5 strengths
-        "areas_for_improvement": areas_for_improvement[:5],  # Top 5 areas
+        "Shortfall_Areas": Shortfall_Areas[:5],  # Top 5 areas
         "cultural_fit": "Candidate demonstrates strong collaborative skills and experience working in agile environments, suggesting good cultural fit for team-oriented organizations.",
         "growth_potential": "Strong technical foundation and continuous learning mindset indicate high potential for growth and advancement.",
         "risk_factors": "No significant risk factors identified. Candidate appears stable with consistent employment history and relevant experience."

@@ -263,10 +263,50 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
                         <div className="analysis-item">
                             <h3 className="analysis-subtitle">🎯 Overall Assessment</h3>
                             <div className="overall-assessment">
-                                {typeof advancedAnalysis.overall_assessment === 'string' 
-                                    ? advancedAnalysis.overall_assessment
-                                    : JSON.stringify(advancedAnalysis.overall_assessment, null, 2)
-                                }
+                                {typeof advancedAnalysis.overall_assessment === 'string' ? (
+                                    <div className="overall-assessment-text">{advancedAnalysis.overall_assessment}</div>
+                                ) : (
+                                    <div className="overall-assessment-structured">
+                                        {advancedAnalysis.overall_assessment.strengths && advancedAnalysis.overall_assessment.strengths.length > 0 && (
+                                            <div className="assessment-section">
+                                                <h4 className="assessment-subtitle">✅ Key Strengths</h4>
+                                                <ul className="assessment-list">
+                                                    {advancedAnalysis.overall_assessment.strengths.map((strength, index) => (
+                                                        <li key={index} className="assessment-item">{strength}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                        {advancedAnalysis.overall_assessment.Shortfall_Areas && advancedAnalysis.overall_assessment.Shortfall_Areas.length > 0 && (
+                                            <div className="assessment-section">
+                                                <h4 className="assessment-subtitle">⚠️ Shortfall Areas</h4>
+                                                <ul className="assessment-list">
+                                                    {advancedAnalysis.overall_assessment.Shortfall_Areas.map((area, index) => (
+                                                        <li key={index} className="assessment-item">{area}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                        {advancedAnalysis.overall_assessment.cultural_fit && (
+                                            <div className="assessment-section">
+                                                <h4 className="assessment-subtitle">🤝 Cultural Fit</h4>
+                                                <p className="assessment-text">{advancedAnalysis.overall_assessment.cultural_fit}</p>
+                                            </div>
+                                        )}
+                                        {advancedAnalysis.overall_assessment.growth_potential && (
+                                            <div className="assessment-section">
+                                                <h4 className="assessment-subtitle">📈 Growth Potential</h4>
+                                                <p className="assessment-text">{advancedAnalysis.overall_assessment.growth_potential}</p>
+                                            </div>
+                                        )}
+                                        {advancedAnalysis.overall_assessment.risk_factors && (
+                                            <div className="assessment-section">
+                                                <h4 className="assessment-subtitle">⚠️ Risk Factors</h4>
+                                                <p className="assessment-text">{advancedAnalysis.overall_assessment.risk_factors}</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     )}
