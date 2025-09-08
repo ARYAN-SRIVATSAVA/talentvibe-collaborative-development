@@ -99,7 +99,7 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
         );
     };
 
-    const formatSubfieldScores = (subfieldScores) => {
+        const formatSubfieldScores = (subfieldScores) => {
         if (!subfieldScores || typeof subfieldScores !== "object") return null;
 
         // Helper function to get circle style based on score
@@ -126,9 +126,25 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
             };
         };
 
-        // Generate separate tables for each section
+        // Get section icons
+        const getSectionIcon = (section) => {
+            const icons = {
+                education: "🎓",
+                experience: "💼",
+                projects: "🚀",
+                leadership: "👑",
+                skills: "⚡",
+                research: "🔬",
+                certifications: "🏆",
+                awards: "🥇",
+                publications: "📚"
+            };
+            return icons[section.toLowerCase()] || "📊";
+        };
+
+        // Generate professional card-based layout
         return (
-            <div className="subfield-scores-tables">
+            <div className="subfield-scores-cards">
                 {Object.entries(subfieldScores).map(([section, data]) => {
                     if (!data || typeof data !== "object") return null;
                     
@@ -140,40 +156,35 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
                     if (numericScores.length === 0) return null;
                     
                     return (
-                        <div key={section} className="subfield-section-table">
-                            <h4 className="subfield-section-title">
-                                {section.charAt(0).toUpperCase() + section.slice(1).replace(/_/g, " ")}
-                            </h4>
-                            <div className="subfield-table-container">
-                                <table className="subfield-table">
-                                    <thead>
-                                        <tr>
-                                            {numericScores.map(([field, value]) => (
-                                                <th key={field} className="subfield-header">
+                        <div key={section} className="subfield-section-card">
+                            <div className="subfield-card-header">
+                                <div className="section-icon">{getSectionIcon(section)}</div>
+                                <h4 className="subfield-card-title">
+                                    {section.charAt(0).toUpperCase() + section.slice(1).replace(/_/g, " ")}
+                                </h4>
+                            </div>
+                            <div className="subfield-metrics-grid">
+                                {numericScores.map(([field, value]) => {
+                                    const circleStyle = getCircleStyle(value);
+                                    return (
+                                        <div key={field} className="subfield-metric-card">
+                                            <div className="metric-header">
+                                                <span className="metric-label">
                                                     {field.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase())}
-                                                </th>
-                                            ))}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            {numericScores.map(([field, value]) => {
-                                                const circleStyle = getCircleStyle(value);
-                                                return (
-                                                    <td key={field} className="subfield-cell">
-                                                        <div 
-                                                            className="subfield-score-circle" 
-                                                            style={circleStyle}
-                                                            title={`${value}/2.0`}
-                                                        >
-                                                            <span className="subfield-score-text">{value}</span>
-                                                        </div>
-                                                    </td>
-                                                );
-                                            })}
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                </span>
+                                            </div>
+                                            <div className="metric-score-container">
+                                                <div 
+                                                    className="metric-score-circle" 
+                                                    style={circleStyle}
+                                                    title={`${value}/2.0`}
+                                                >
+                                                    <span className="metric-score-text">{value}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                     );
@@ -181,6 +192,7 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
             </div>
         );
     };
+;
 
     const formatFinalScore = (finalScoreDetails) => {
         if (!finalScoreDetails || typeof finalScoreDetails !== 'object') return null;
