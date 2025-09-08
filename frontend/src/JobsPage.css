@@ -14,7 +14,7 @@
 }
 
 .job-card {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     justify-content: space-between;
     padding: 1.5rem;
@@ -161,7 +161,7 @@
 }
 
 .detailed-resume-header {
-    display: flex;
+    display: flex !important;
     justify-content: space-between;
     align-items: flex-start;
     border-bottom: 1px solid var(--glass-border-color);
@@ -171,14 +171,14 @@
 }
 
 .header-actions {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
     gap: 1rem;
 }
 
 .interview-hub {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
     gap: 0.75rem;
 }
 
@@ -222,8 +222,8 @@
     font-weight: 600;
     font-size: 0.9rem;
     transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
     gap: 0.5rem;
     box-shadow: 0 4px 15px rgba(0, 170, 255, 0.3);
 }
@@ -308,7 +308,7 @@
 .skill-matrix {
     border-top: 1px solid var(--glass-border-color);
     padding-top: 1.5rem;
-    display: flex;
+    display: flex !important;
     gap: 2rem;
 }
 
@@ -327,7 +327,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
+    display: flex !important;
     flex-wrap: wrap;
     gap: 0.5rem;
 }
@@ -357,9 +357,9 @@
 }
 
 .resume-header {
-    display: flex;
+    display: flex !important;
     justify-content: space-between;
-    align-items: center;
+    align-items: center !important;
     margin-bottom: 1rem;
 }
 
@@ -390,7 +390,7 @@
 }
 
 .job-card-actions {
-    display: flex;
+    display: flex !important;
     gap: 0.75rem;
     margin-top: 1rem;
 }
@@ -466,7 +466,7 @@
     list-style-type: none;
     padding-left: 0;
     margin: 0;
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     gap: 0.75rem;
 }
@@ -505,7 +505,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
+    display: flex !important;
     flex-wrap: wrap;
     gap: 0.5rem;
 }
@@ -527,9 +527,9 @@
     font-size: 0.9rem;
     font-weight: 600;
     transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
@@ -638,7 +638,7 @@
 }
 
 .summary-item {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     gap: 0.25rem;
 }
@@ -799,9 +799,9 @@
 }
 
 .summary-item {
-    display: flex;
+    display: flex !important;
     justify-content: space-between;
-    align-items: center;
+    align-items: center !important;
     padding: 0.75rem;
     background: rgba(255, 255, 255, 0.03);
     border-radius: 8px;
@@ -826,8 +826,8 @@
     margin: 2rem 0 1rem 0;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid var(--primary-color);
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
     gap: 0.5rem;
 }
 
@@ -856,8 +856,8 @@
     font-weight: 600;
     margin: 0 0 0.75rem 0;
     text-transform: capitalize;
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
     gap: 0.5rem;
 }
 
@@ -940,15 +940,15 @@
 
 /* Enhanced Scoring Display Styles */
 .section-weights {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     gap: 0.8rem;
     margin: 1rem 0;
 }
 
 .weight-item {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
     gap: 1rem;
     padding: 0.8rem;
     background: rgba(255, 255, 255, 0.1);
@@ -966,7 +966,7 @@
 .weight-value {
     font-weight: 700;
     color: #00aaff;
-    min-width: 60px;
+    min-width: 60px !important;
     text-align: right;
 }
 
@@ -989,7 +989,7 @@
 
 /* Professional Card-Based Subfield Scores */
 .subfield-scores-cards {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     gap: 2.5rem;
     margin: 2rem 0;
@@ -1012,8 +1012,8 @@
 }
 
 .subfield-card-header {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
     gap: 1rem;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
@@ -1071,18 +1071,18 @@
 }
 
 .metric-score-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 
 .metric-score-circle {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     border: 3px solid rgba(255, 255, 255, 0.3);
     cursor: pointer;
@@ -1099,7 +1099,7 @@
     right: 0;
     bottom: 0;
     background: inherit;
-    border-radius: 50%;
+    border-radius: 50% !important;
     opacity: 0.1;
     transform: scale(1.2);
     filter: blur(10px);
@@ -1168,14 +1168,14 @@
 }
 
 .subfield-items {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     gap: 0.6rem;
 }
 
 .subfield-item {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
     gap: 1rem;
     padding: 0.6rem;
     background: rgba(255, 255, 255, 0.1);
@@ -1222,26 +1222,26 @@
 }
 
 .final-score-main {
-    display: flex;
-    justify-content: center;
+    display: flex !important;
+    justify-content: center !important;
     margin-bottom: 2rem;
 }
 
 .score-circle-container {
-    display: flex;
-    justify-content: center;
+    display: flex !important;
+    justify-content: center !important;
     margin: 1.5rem 0;
 }
 
 .score-circle {
     width: 120px;
     height: 120px;
-    border-radius: 50%;
+    border-radius: 50% !important;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
+    display: flex !important;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: center !important;
+    justify-content: center !important;
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
     border: 4px solid rgba(255, 255, 255, 0.2);
 }
@@ -1271,9 +1271,9 @@
 }
 
 .section-score-item {
-    display: flex;
+    display: flex !important;
     justify-content: space-between;
-    align-items: center;
+    align-items: center !important;
     padding: 0.8rem;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
@@ -1308,7 +1308,7 @@
 
 /* Overall Assessment Styling */
 .overall-assessment-structured {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     gap: 1.5rem;
 }
@@ -1325,8 +1325,8 @@
     font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
     gap: 0.5rem;
 }
 
