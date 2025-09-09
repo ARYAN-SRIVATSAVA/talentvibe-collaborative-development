@@ -126,7 +126,7 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
             };
         };
 
-        // Get section icons
+        // Removed section icons
         const getSectionTooltipContent = (section) => {
             const tooltips = {
                 education: "Education scores evaluate academic qualifications, institution reputation, and alignment with job requirements. Higher scores indicate better educational fit.",
@@ -140,19 +140,6 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
                 publications: "Publication scores assess academic output, impact, and relevance. Higher scores indicate stronger academic contributions."
             };
             return tooltips[section.toLowerCase()] || "This section evaluates various aspects relevant to the job requirements.";
-        };        const getSectionIcon = (section) => {
-            const icons = {
-                education: "🎓",
-                experience: "💼",
-                projects: "🚀",
-                leadership: "👑",
-                skills: "⚡",
-                research: "🔬",
-                certifications: "🏆",
-                awards: "🥇",
-                publications: "📚"
-            };
-            return icons[section.toLowerCase()] || "📊";
         };
 
         // Generate professional card-based layout

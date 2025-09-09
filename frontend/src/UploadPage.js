@@ -69,7 +69,6 @@ const UploadPage = () => {
         const forceClearOnReload = () => {
             // Method 1: Check performance navigation type
             if (performance.navigation && performance.navigation.type === 1) {
-                console.log('Page reload detected via performance.navigation');
                 return true;
             }
             
@@ -77,7 +76,6 @@ const UploadPage = () => {
             if (performance.getEntriesByType && performance.getEntriesByType('navigation').length > 0) {
                 const navEntry = performance.getEntriesByType('navigation')[0];
                 if (navEntry.type === 'reload') {
-                    console.log('Page reload detected via performance.getEntriesByType');
                     return true;
                 }
             }
@@ -89,7 +87,6 @@ const UploadPage = () => {
             if (!lastVisit) {
                 // First visit, set timestamp and treat as reload
                 sessionStorage.setItem('uploadPage_lastVisit', currentTime.toString());
-                console.log('First visit detected, treating as reload');
                 return true;
             }
             
@@ -97,19 +94,16 @@ const UploadPage = () => {
             const timeDiff = currentTime - parseInt(lastVisit);
             if (timeDiff > 30 * 1000) { // 30 seconds
                 sessionStorage.setItem('uploadPage_lastVisit', currentTime.toString());
-                console.log('Time gap detected, treating as reload');
                 return true;
             }
             
             // Update timestamp for this visit
             sessionStorage.setItem('uploadPage_lastVisit', currentTime.toString());
-            console.log('Navigation detected, preserving data');
             return false;
         };
         
         if (forceClearOnReload()) {
             // This is a page reload, clear all stored data
-            console.log('Clearing stored data due to page reload');
             clearStoredData();
             return;
         }
@@ -173,11 +167,9 @@ const UploadPage = () => {
         socketRef.current = io();
         
         socketRef.current.on('connect', () => {
-            console.log('Connected to server');
         });
 
         socketRef.current.on('progress_update', (data) => {
-            console.log('Progress update:', data);
             setProgressUpdates(prev => [...prev, data]);
             
             // Auto-navigate when analysis is complete
@@ -192,7 +184,6 @@ const UploadPage = () => {
         });
 
         socketRef.current.on('disconnect', () => {
-            console.log('Disconnected from server');
         });
 
         return () => {
@@ -231,7 +222,6 @@ const UploadPage = () => {
                 setMessage('Warning: Could not check for existing JD file. Proceeding with upload.');
             }
         } catch (error) {
-            console.error('JD check error:', error);
             setMessage('Warning: Could not check for existing JD file');
         } finally {
             setIsCheckingJd(false);
@@ -284,7 +274,6 @@ const UploadPage = () => {
                 setMessage('Warning: Could not check for duplicate resumes.');
             }
         } catch (error) {
-            console.error('Duplicate check error:', error);
             setMessage('Warning: Could not check for duplicate resumes');
         } finally {
             setIsCheckingDuplicates(false);

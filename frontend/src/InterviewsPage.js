@@ -21,7 +21,6 @@ const InterviewsPage = () => {
             setInterviews(data);
         } catch (error) {
             setError(error.message);
-            console.error('Error fetching interviews:', error);
         } finally {
             setIsLoading(false);
         }

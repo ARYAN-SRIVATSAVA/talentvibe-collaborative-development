@@ -38,10 +38,8 @@ const FeedbackModal = ({ isOpen, onClose, resume, onSubmitFeedback, onSubmitOver
         setFeedbackText('');
         setSuggestedBucket('');
       } else {
-        console.error('Failed to submit feedback');
       }
     } catch (error) {
-      console.error('Error submitting feedback:', error);
     } finally {
       setIsSubmitting(false);
     }
@@ -73,10 +71,8 @@ const FeedbackModal = ({ isOpen, onClose, resume, onSubmitFeedback, onSubmitOver
         setNewBucket('');
         setOverrideReason('');
       } else {
-        console.error('Failed to submit override');
       }
     } catch (error) {
-      console.error('Error submitting override:', error);
     } finally {
       setIsSubmitting(false);
     }

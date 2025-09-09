@@ -18,7 +18,6 @@ const FeedbackDashboard = () => {
             setStats(data);
         } catch (error) {
             setError(error.message);
-            console.error('Error fetching feedback stats:', error);
         } finally {
             setIsLoading(false);
         }

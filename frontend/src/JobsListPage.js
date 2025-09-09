@@ -29,7 +29,6 @@ const JobsListPage = () => {
             setJobs(data);
         } catch (error) {
             setError(error.message);
-            console.error("Failed to fetch jobs:", error);
         } finally {
             setIsLoading(false);
         }
@@ -54,15 +53,13 @@ const JobsListPage = () => {
                 throw new Error(errorData.error || 'Failed to delete job');
             }
 
-            const result = await response.json();
-            console.log('Job deleted:', result);
+            // const result = await response.json();
             
             // Refresh the jobs list
             await fetchJobs();
             
         } catch (error) {
             setError(`Failed to delete job: ${error.message}`);
-            console.error("Failed to delete job:", error);
         } finally {
             setDeletingJobId(null);
         }

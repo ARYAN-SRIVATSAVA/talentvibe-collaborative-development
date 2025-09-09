@@ -143,12 +143,12 @@ const JobDetailsPage = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [isAnalyzing, setIsAnalyzing] = useState(true); // Show progress continuously
     const [isAutoRefresh, setIsAutoRefresh] = useState(false);
-    const [overallComment, setOverallComment] = useState(null);
+    // Removed unused overallComment state
     // Set up callback for overall comment extraction
     React.useEffect(() => {
-        window.setOverallComment = setOverallComment;
+        // Removed setOverallComment reference
         return () => {
-            delete window.setOverallComment;
+            // Removed setOverallComment cleanup
         };
     }, []);
     const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
@@ -196,7 +196,6 @@ const JobDetailsPage = () => {
             const stillProcessing = totalResumes === 0 || analyzedResumes < totalResumes;
             setIsProcessing(stillProcessing);
             
-            console.log(`🔄 Processing status: ${stillProcessing ? 'Still processing' : 'Complete'}`);
             
         } catch (err) {
             setError(err.message);
@@ -217,14 +216,12 @@ const JobDetailsPage = () => {
         
         // Continue auto-refresh until we detect processing is complete
         if (jobDetails) {
-            console.log('🔄 Setting up auto-refresh for job details');
             interval = setInterval(() => {
                 setIsAutoRefresh(true);
             setIsProcessing(true); // Show progress indicator during auto-refresh                // Check current state
                 const totalResumes = jobDetails.resumes?.length || 0;
                 const analyzedResumes = jobDetails.resumes?.filter(r => r.analysis)?.length || 0;
                 
-                console.log(`📊 Resume analysis progress: ${analyzedResumes}/${totalResumes} analyzed`);
                 
                 // Continue refreshing if:
                 // 1. We have resumes but not all are analyzed
@@ -239,10 +236,8 @@ const JobDetailsPage = () => {
                 );
                 
                 if (shouldContinue) {
-                    console.log('🔄 Continuing auto-refresh, fetching job details...');
                     fetchJobDetails();
                 } else {
-                    console.log('✅ All resumes processed, stopping auto-refresh');
                     clearInterval(interval);
                     setIsProcessing(false);
                     setIsAnalyzing(false); // Stop showing progress when complete
@@ -253,7 +248,6 @@ const JobDetailsPage = () => {
         
         return () => {
             if (interval) {
-                console.log('🛑 Cleaning up auto-refresh interval');
                 clearInterval(interval);
             }
         };
@@ -324,7 +318,6 @@ const JobDetailsPage = () => {
 
     const handleInterviewCreated = (interviewId) => {
         // We need to refresh the job details to get the new interview status
-        console.log('Interview created/updated with ID:', interviewId);
         setIsInterviewModalOpen(false);
         // Trigger a re-fetch of job details
         fetchJobDetails(); 
