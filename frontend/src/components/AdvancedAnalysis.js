@@ -127,7 +127,20 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
         };
 
         // Get section icons
-        const getSectionIcon = (section) => {
+        const getSectionTooltipContent = (section) => {
+            const tooltips = {
+                education: "Education scores evaluate academic qualifications, institution reputation, and alignment with job requirements. Higher scores indicate better educational fit.",
+                experience: "Experience scores assess relevance, depth, and career progression. Scores reflect how well past roles match the target position.",
+                skills: "Skills scores measure technical competencies, certifications, and proficiency levels. Higher scores indicate stronger skill alignment.",
+                projects: "Project scores evaluate complexity, relevance, and outcomes. They assess practical application of skills in real-world scenarios.",
+                leadership: "Leadership scores measure management experience, team size, and influence. Higher scores indicate stronger leadership capabilities.",
+                research: "Research scores assess publications, academic contributions, and research methodology. Higher scores indicate stronger research background.",
+                certifications: "Certification scores evaluate professional credentials, recency, and relevance. Higher scores indicate better credential alignment.",
+                awards: "Award scores measure recognition, prestige, and selectivity. Higher scores indicate more prestigious achievements.",
+                publications: "Publication scores assess academic output, impact, and relevance. Higher scores indicate stronger academic contributions."
+            };
+            return tooltips[section.toLowerCase()] || "This section evaluates various aspects relevant to the job requirements.";
+        };        const getSectionIcon = (section) => {
             const icons = {
                 education: "🎓",
                 experience: "💼",
@@ -158,9 +171,25 @@ const AdvancedAnalysis = ({ advancedAnalysis = {} }) => {
                     return (
                         <div key={section} className="subfield-section-card">
                             <div className="subfield-card-header">
-                                
                                 <h4 className="subfield-card-title">
                                     {section.charAt(0).toUpperCase() + section.slice(1).replace(/_/g, " ")}
+                                    <span 
+                                        className="info-icon" 
+                                        title={getSectionTooltipContent(section)}
+                                        onMouseEnter={(e) => {
+                                            const tooltip = e.target.nextElementSibling;
+                                            if (tooltip) tooltip.style.display = 'block';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            const tooltip = e.target.nextElementSibling;
+                                            if (tooltip) tooltip.style.display = 'none';
+                                        }}
+                                    >
+                                        ℹ️
+                                    </span>
+                                    <div className="tooltip">
+                                        {getSectionTooltipContent(section)}
+                                    </div>
                                 </h4>
                             </div>
                             <div className="subfield-metrics-grid">
