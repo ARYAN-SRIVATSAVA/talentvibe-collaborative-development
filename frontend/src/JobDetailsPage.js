@@ -5,6 +5,44 @@ import InterviewModal from './components/InterviewModal';
 import AdvancedAnalysis from './components/AdvancedAnalysis';
 import './JobsPage.css';
 
+
+const generateWeightedSummary = (selectedResume, advancedAnalysis) => {
+    const overallComment = selectedResume.analysis?.reasoning || "No analysis available";
+    const sectionWeights = advancedAnalysis?.section_weights || {};
+    const overallAssessment = advancedAnalysis?.overall_assessment || {};
+    
+    // Get sections with non-zero weights
+    const weightedSections = Object.entries(sectionWeights)
+        .filter(([section, weight]) => weight > 0)
+        .sort(([,a], [,b]) => b - a); // Sort by weight descending
+    
+    // Build strengths and shortfalls
+    const strengths = overallAssessment.strengths || [];
+    const shortfalls = overallAssessment.Shortfall_Areas || [];
+    
+    // Create section-specific insights
+    const sectionInsights = weightedSections.map(([section, weight]) => {
+        const sectionName = section.charAt(0).toUpperCase() + section.slice(1);
+        return `${sectionName} (${weight}% weight)`;
+    }).join(", ");
+    
+    // Build the summary
+    let summary = overallComment;
+    
+    if (strengths.length > 0) {
+        summary += ` The candidate demonstrates ${strengths.slice(0, 2).join(" and ")}.`;
+    }
+    
+    if (sectionInsights) {
+        summary += ` Key focus areas based on job requirements include ${sectionInsights}.`;
+    }
+    
+    if (shortfalls.length > 0) {
+        summary += ` However, ${shortfalls.slice(0, 1).join(" and ")} represent areas for development.`;
+    }
+    
+    return summary;
+};
 const SkillMatrix = ({ skills }) => (
     <div className="skill-matrix">
         <div className="skill-column matches">
@@ -418,7 +456,7 @@ const JobDetailsPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <p className="reasoning">{overallComment || selectedResume.analysis?.reasoning}</p>
+                        <p className="reasoning">{generateWeightedSummary(selectedResume, selectedResume?.analysis?.advanced_analysis)}</p>
                         
                         <div className="score-circle-container">
                             <div className="score-circle">
