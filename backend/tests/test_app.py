@@ -27,7 +27,7 @@ def test_get_data(client):
     json_data = response.get_json()
     assert json_data['message'] == 'Hello from the Flask backend!'
 
-@patch('backend.app.analyze_resume_with_advanced_ai')
+@patch("application.analyze_resume_with_advanced_ai")
 def test_analyze_resumes(mock_analyze_resume, client):
     """Test the /api/analyze endpoint for file upload and DB storage."""
     # Arrange: Mock the return value of the AI analysis to be a JSON string
@@ -51,7 +51,7 @@ def test_analyze_resumes(mock_analyze_resume, client):
     
     assert response.status_code == 200
     json_data = response.get_json()
-    assert json_data['message'] == 'Successfully analyzed and stored resumes.'
+    assert json_data["message"] == "Queued 1 resumes for background processing"
     assert 'job_id' in json_data
     assert isinstance(json_data['job_id'], int)
 
@@ -64,5 +64,3 @@ def test_analyze_resumes(mock_analyze_resume, client):
     resume = job.resumes[0]
     assert resume.filename == 'test_resume.txt'
     
-    # Assert that the analysis stored in the DB is the correct JSON string
-    assert resume.analysis == json.dumps(mock_analysis) 

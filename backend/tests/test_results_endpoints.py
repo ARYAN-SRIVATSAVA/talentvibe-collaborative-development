@@ -1,7 +1,7 @@
 import pytest
 import json
 from backend.app import app as flask_app, db
-from backend.app import Job, Resume
+from backend.app import Job, Resume, User
 
 @pytest.fixture
 def app():
@@ -29,9 +29,13 @@ def test_get_jobs_empty(client):
 
 def test_get_jobs_with_data(client):
     """Test /api/jobs endpoint with existing jobs."""
-    # Arrange
-    job1 = Job(description="Job 1")
-    job2 = Job(description="Job 2")
+    # Arrange - Create a user first
+    user = User(username="default_user")
+    db.session.add(user)
+    db.session.commit()
+    
+    job1 = Job(description="Job 1", user_id=user.id)
+    job2 = Job(description="Job 2", user_id=user.id)
     db.session.add_all([job1, job2])
     db.session.commit()
 
@@ -42,15 +46,19 @@ def test_get_jobs_with_data(client):
     # Assert
     assert response.status_code == 200
     assert len(data) == 2
-    assert data[0]['description'] == 'Job 1'
-    assert data[1]['description'] == 'Job 2'
+    assert data[0]["description"] == "Job 2"
+    assert data[1]["description"] == "Job 1"
 
 def test_get_job_details(client):
     """Test /api/jobs/<id> endpoint."""
-    # Arrange
+    # Arrange - Create a user first
+    user = User(username="default_user")
+    db.session.add(user)
+    db.session.commit()
+    
     analysis_data = {"summary": "Great candidate", "overall_rating": 9}
-    job = Job(description="Software Engineer")
-    resume = Resume(filename="test.pdf", content="Experience...", analysis=json.dumps(analysis_data), job=job)
+    job = Job(description="Software Engineer", user_id=user.id)
+    resume = Resume(filename="test.pdf", content="Experience...", content_hash="test_hash", analysis=json.dumps(analysis_data), job=job)
     db.session.add_all([job, resume])
     db.session.commit()
 
