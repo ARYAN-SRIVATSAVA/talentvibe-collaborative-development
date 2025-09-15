@@ -1100,8 +1100,6 @@ Use this information to enhance your scoring. If keywords are found but sections
                     
                     print(f"  🔧 Math validation: {actual_total_years:.2f} years ({actual_total_months} months)")
             return result
-            # Cache the result for deterministic behavior
-            self.job_level_cache[cache_key] = result
 
             
         except Exception as e:
