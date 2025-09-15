@@ -429,7 +429,7 @@ const UploadPage = () => {
                 <form onSubmit={handleSubmit} className="upload-form">
                     {/* Job Description Upload Section */}
                     <div className="upload-section clickable-upload-section" onClick={() => document.getElementById("jobDescriptionFiles").click()}>
-                        <h3 className="section-heading">📄 Upload Job Descriptions</h3>
+                        <h3 className="section-heading">Upload Job Descriptions</h3>
                         <p className="section-description">Upload one or more job description files to define the role requirements.</p>                    <FileDropZone
                         label="Upload Job Description Files"
                         files={jobDescriptionFiles}
@@ -538,7 +538,7 @@ const UploadPage = () => {
                     
                     {/* Resume Upload Section */}
                     <div className="upload-section clickable-upload-section" onClick={() => document.getElementById("resumes").click()}>
-                        <h3 className="section-heading">☁️ Upload Resumes</h3>
+                        <h3 className="section-heading">Upload Resumes</h3>
                         <p className="section-description">Upload one or more resume files to analyze against the job description.</p>                    <FileDropZone
                         label="Upload Résumés"
                         files={resumes}
