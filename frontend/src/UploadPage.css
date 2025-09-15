@@ -332,8 +332,8 @@
     background-color: rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
 }
-
 .clickable-upload-section:active {
     transform: translateY(0);
     
@@ -357,19 +357,10 @@
     line-height: 1.4;
     opacity: 0.9;
     padding-left: 0;
-    
-    
-    
-    
-    
     font-weight: 600;
     transition: all 0.3s ease;
-    
     font-size: 1rem;
-    text-align: center;
-    
-    
-}
+    text-align: center;}
 
 .file-input-hidden {
     position: absolute;
@@ -399,21 +390,6 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
-/* Add subtle animation to indicate interactivity */
-.upload-section::before {
-    content: "👆";
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-size: 1.2rem;
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
-}
-
-.upload-section:hover::before {
-    opacity: 1;
-    animation: pulse 2s infinite;
-}
 
 @keyframes pulse {
     0%, 100% { transform: scale(1); }
