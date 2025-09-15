@@ -569,11 +569,13 @@ class ResumeScorer:
         self.client = openai.OpenAI(api_key=self.api_key)
         self.section_weights_cache = {}
         self.subfield_scores_cache = {}
+        self.job_level_cache = {}
     
     def clear_cache(self):
         """Clear all cached results to force fresh evaluation."""
         self.section_weights_cache = {}
         self.subfield_scores_cache = {}
+        self.job_level_cache = {}
         
     def _get_deterministic_seed(self, job_description: str) -> int:
         """Generate a deterministic seed based on job description hash."""
@@ -1098,6 +1100,9 @@ Use this information to enhance your scoring. If keywords are found but sections
                     
                     print(f"  🔧 Math validation: {actual_total_years:.2f} years ({actual_total_months} months)")
             return result
+            # Cache the result for deterministic behavior
+            self.job_level_cache[cache_key] = result
+
             
         except Exception as e:
             
@@ -1297,6 +1302,13 @@ Use this information to enhance your scoring. If keywords are found but sections
         This is the preferred method as LLM analysis is more sophisticated than regex patterns.
         """
         try:
+            # Check cache first for deterministic behavior
+            cache_key = hashlib.md5(job_description.encode()).hexdigest()
+            if cache_key in self.job_level_cache:
+                print("  ✅ Using cached job level extraction...")
+                return self.job_level_cache[cache_key]
+        
+
             # Create a focused prompt for job requirement and level extraction
             requirement_prompt = f"""
             Analyze the job description to extract both the years of experience required and the job level.
@@ -1361,7 +1373,8 @@ Use this information to enhance your scoring. If keywords are found but sections
                     result["total_months"] = actual_total_months
                     result["total_years"] = actual_total_years
                     
-                    print(f"  🔧 Math validation: {actual_total_years:.2f} years ({actual_total_months} months)")
+            # Cache the result for deterministic behavior
+            self.job_level_cache[cache_key] = result
             return result
             
         except Exception as e:
