@@ -1102,13 +1102,15 @@ Use this information to enhance your scoring. If keywords are found but sections
                     actual_total_years = actual_total_months / 12
                     
                     # Override with correct values
+                    result["total_months"] = actual_total_months
+                    result["total_years"] = actual_total_years
+                    print(f"  🔧 Math validation: {actual_total_years:.2f} years ({actual_total_months} months)")
             # Validation: Check for incorrect "Present" date calculations
             if "calculation_details" in result:
                 details = result["calculation_details"]
                 if "0 months" in details and "Present" in resume_text:
                     print(f"  ⚠️  WARNING: Detected 0 months for Present date - this may be incorrect")
                     print(f"  📅 Current date used: {current_month_year}")
-                    print(f"  🔧 Math validation: {actual_total_years:.2f} years ({actual_total_months} months)")
             return result
 
             
