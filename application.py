@@ -28,6 +28,9 @@ CORS(app)
 db = SQLAlchemy(app)
 
 # Configure OpenAI with environment variable
+
+# Global ResumeScorer cache for deterministic section weights
+_scorer_cache = {}
 openai.api_key = os.environ.get('OPENAI_API_KEY', "your-openai-api-key-here")
 
 # Database Models
@@ -388,9 +391,14 @@ def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, file
         
         print(f"🚀 STARTING ADVANCED AI ANALYSIS FOR {filename} - VERSION 2.0")
         
-        # Initialize the advanced scorer
-        scorer = ResumeScorer()
-        
+        # Use cached scorer for deterministic section weights
+        job_hash = hashlib.md5(job_description.encode()).hexdigest()
+        if job_hash not in _scorer_cache:
+            _scorer_cache[job_hash] = ResumeScorer()
+            print(f"  📊 Created new ResumeScorer for job hash: {job_hash[:8]}...")
+        else:
+            print(f"  ✅ Reusing cached ResumeScorer for job hash: {job_hash[:8]}...")
+        scorer = _scorer_cache[job_hash]        
         # Get advanced analysis
         advanced_result = scorer.score_resume(job_description, resume_text)
         
