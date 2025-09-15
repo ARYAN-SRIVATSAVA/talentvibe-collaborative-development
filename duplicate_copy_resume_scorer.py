@@ -1008,11 +1008,15 @@ Use this information to enhance your scoring. If keywords are found but sections
         Calculate total years of professional experience from resume using LLM.
         """
         try:
-            # Create a focused prompt for experience calculation
+            # Get current date dynamically
+            from datetime import datetime
+            current_date = datetime.now()
+            current_month_year = current_date.strftime("%B %Y")
+                        # Create a focused prompt for experience calculation
             experience_prompt = f"""
             You are an expert at calculating total years of experience from resume text.
             
-            IMPORTANT: Use the current date as September 2025 for all calculations.
+            IMPORTANT: Use the current date as {current_month_year} for all calculations.
             
             Calculate TOTAL YEARS of PROFESSIONAL WORK EXPERIENCE from the resume text.
             
@@ -1026,7 +1030,10 @@ Use this information to enhance your scoring. If keywords are found but sections
             - Parse the resume text to identify all work experience entries
             - Look for job titles, company names, and date ranges (e.g., "January 2024-August 2024", "2020-2021", "Present")
             - For each experience entry, extract the start and end dates
-            - IMPORTANT: If a date is in the future (like "January 2025-Present"), assume end date is current month/year
+            - IMPORTANT: For "Present" end dates, use {current_month_year} as the end date
+            - IMPORTANT: Calculate experience from start date to {current_month_year}
+            - IMPORTANT: Only set experience to 0 if start date is after {current_month_year} (truly future)
+            - IMPORTANT: Example: "January 2025-Present" = January 2025 to {current_month_year} = calculate months between these dates
             - Add up the durations in **months**, then convert total to **years** using exact calculation
             - Consider overlapping experience as separate experiences
             - DO NOT round down unless dates are truly unclear or ambiguous. Use exact calculations for clear dates
@@ -1095,9 +1102,12 @@ Use this information to enhance your scoring. If keywords are found but sections
                     actual_total_years = actual_total_months / 12
                     
                     # Override with correct values
-                    result["total_months"] = actual_total_months
-                    result["total_years"] = actual_total_years
-                    
+            # Validation: Check for incorrect "Present" date calculations
+            if "calculation_details" in result:
+                details = result["calculation_details"]
+                if "0 months" in details and "Present" in resume_text:
+                    print(f"  ⚠️  WARNING: Detected 0 months for Present date - this may be incorrect")
+                    print(f"  📅 Current date used: {current_month_year}")
                     print(f"  🔧 Math validation: {actual_total_years:.2f} years ({actual_total_months} months)")
             return result
 
