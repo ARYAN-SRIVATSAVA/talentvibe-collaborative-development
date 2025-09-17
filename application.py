@@ -491,13 +491,7 @@ def extract_comments_only(advanced_result: dict) -> dict:
         except json.JSONDecodeError:
             subfield_scores = {}
     
-    # Get section weights to filter out zero-weight sections
-    section_weights = advanced_result.get("section_weights", {})
-    
     for section, subfields in subfield_scores.items():
-        # Skip zero-weight sections - only include non-zero weight sections in summary
-        if section_weights.get(section, 0) == 0:
-            continue
             
         if section == "overall_comment" and isinstance(subfields, str):
             # Handle overall_comment as a special case
@@ -541,11 +535,23 @@ def extract_comments_only(advanced_result: dict) -> dict:
     candidate_experience = advanced_result.get("candidate_experience", {})
     job_requirements = advanced_result.get("job_requirements", {})
     
+    # Create filtered version for summary (non-zero weight sections only)
+    section_weights = advanced_result.get("section_weights", {})
+    filtered_detailed_reasoning = {
+        section: data for section, data in detailed_reasoning.items() 
+        if section_weights.get(section, 0) > 0
+    }
+    
+    # Generate filtered overall assessment for summary
+    filtered_overall_assessment = generate_overall_assessment(filtered_detailed_reasoning, section_weights)
+    
     return {
-        "detailed_reasoning": detailed_reasoning,
-        "overall_assessment": overall_assessment,
+        "detailed_reasoning": detailed_reasoning,  # ALL sections for detailed comments & reasoning
+        "overall_assessment": overall_assessment,  # ALL sections for comprehensive assessment
         "candidate_experience": candidate_experience,
-        "job_requirements": job_requirements
+        "job_requirements": job_requirements,
+        "filtered_detailed_reasoning": filtered_detailed_reasoning,  # Non-zero weight sections only for summary
+        "filtered_overall_assessment": filtered_overall_assessment   # Non-zero weight sections only for summary
     }
 
 def generate_overall_assessment(detailed_reasoning: dict, section_weights: dict) -> dict:
