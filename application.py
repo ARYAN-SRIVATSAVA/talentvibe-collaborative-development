@@ -569,7 +569,7 @@ def generate_overall_assessment(detailed_reasoning: dict, section_weights: dict)
                 score_2_ratio = score_2_count / total_scores
                 score_0_ratio = score_0_count / total_scores
                 
-                if score_2_ratio >= 0.5 or avg_score >= 1.3:  # Majority 2s or high average
+                if score_2_ratio >= 0.5 or avg_score >= 1.0:  # Majority 2s or high average
                     strengths.append(f"{section.replace('_', ' ').title()}: {comment}")
                 elif score_0_ratio >= 0.5 or avg_score < 1.0:  # Majority 0s or low average
                     shortfall_areas.append(f"{section.replace('_', ' ').title()}: {comment}")
