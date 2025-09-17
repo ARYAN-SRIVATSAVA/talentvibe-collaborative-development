@@ -504,26 +504,40 @@ def generate_overall_assessment(detailed_reasoning: dict, section_weights: dict)
     strengths = []
     shortfall_areas = []
     
-    # Extract strengths and shortfalls based on actual scores from non-zero weight sections
+    # Extract strengths and shortfalls based on actual scores from ALL sections (including zero-weight)
     for section, data in detailed_reasoning.items():
-        if section_weights.get(section, 0) > 0:  # Only non-zero weight sections
-            if isinstance(data, dict) and "scores" in data:
-                comment = data.get("comment", "")
-                scores = data.get("scores", {})
+        # Include ALL sections for overall assessment, not just non-zero weight sections
+        if isinstance(data, dict) and "scores" in data:
+            comment = data.get("comment", "")
+            scores = data.get("scores", {})
+            
+            if scores:
+                # Count score distribution
+                score_2_count = sum(1 for score in scores.values() if score == 2)
+                score_1_count = sum(1 for score in scores.values() if score == 1)
+                score_0_count = sum(1 for score in scores.values() if score == 0)
+                total_scores = len(scores)
                 
-                # Calculate average score for the section
-                if scores:
-                    avg_score = sum(scores.values()) / len(scores)
-                    if avg_score >= 1.5:  # High score = strength
-                        strengths.append(f"{section.replace('_', ' ').title()}: {comment}")
-                    else:  # Low score = shortfall
-                        shortfall_areas.append(f"{section.replace('_', ' ').title()}: {comment}")
-                else:
-                    # If no scores, use neutral categorization
-                    if any(word in comment.lower() for word in ["strong", "excellent", "demonstrates", "proven", "significant"]):
-                        strengths.append(f"{section.replace('_', ' ').title()}: {comment}")
-                    elif any(word in comment.lower() for word in ["no", "limited", "missing", "lacks", "not mentioned"]):
-                        shortfall_areas.append(f"{section.replace('_', ' ').title()}: {comment}")
+                # Categorization logic:
+                # Strength: Majority (≥50%) of scores are 2, OR average ≥ 1.3
+                # Shortfall: Majority (≥50%) of scores are 0, OR average < 1.0
+                # Neutral: Everything else (mostly 1s or mixed)
+                
+                avg_score = sum(scores.values()) / total_scores
+                score_2_ratio = score_2_count / total_scores
+                score_0_ratio = score_0_count / total_scores
+                
+                if score_2_ratio >= 0.5 or avg_score >= 1.3:  # Majority 2s or high average
+                    strengths.append(f"{section.replace('_', ' ').title()}: {comment}")
+                elif score_0_ratio >= 0.5 or avg_score < 1.0:  # Majority 0s or low average
+                    shortfall_areas.append(f"{section.replace('_', ' ').title()}: {comment}")
+                # Neutral cases (mostly 1s) are not included in either category
+            else:
+                # If no scores, use keyword-based fallback
+                if any(word in comment.lower() for word in ["strong", "excellent", "demonstrates", "proven", "significant"]):
+                    strengths.append(f"{section.replace('_', ' ').title()}: {comment}")
+                elif any(word in comment.lower() for word in ["no", "limited", "missing", "lacks", "not mentioned"]):
+                    shortfall_areas.append(f"{section.replace('_', ' ').title()}: {comment}")
     
     return {
         "strengths": strengths,  # All strengths, no limit
