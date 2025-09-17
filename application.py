@@ -491,7 +491,14 @@ def extract_comments_only(advanced_result: dict) -> dict:
         except json.JSONDecodeError:
             subfield_scores = {}
     
+    # Get section weights to filter out zero-weight sections
+    section_weights = advanced_result.get("section_weights", {})
+    
     for section, subfields in subfield_scores.items():
+        # Skip zero-weight sections - only include non-zero weight sections in summary
+        if section_weights.get(section, 0) == 0:
+            continue
+            
         if section == "overall_comment" and isinstance(subfields, str):
             # Handle overall_comment as a special case
             detailed_reasoning[section] = {"overall_comment": subfields}
