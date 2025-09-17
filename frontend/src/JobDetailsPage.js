@@ -18,7 +18,7 @@ const generateWeightedSummary = (selectedResume, advancedAnalysis) => {
     let summary = overallComment;
     
     if (strengths.length > 0) {
-        summary += ` The candidate demonstrates ${strengths.slice(0, 2).join(" and ")}.`;
+        summary += ` The candidate demonstrates ${strengths.slice(0, 5).join(" and ")}.`;
     }
     
     if (shortfalls.length > 0) {
