@@ -458,21 +458,35 @@ def extract_comments_only(advanced_result: dict) -> dict:
             # Handle overall_comment as a special case
             detailed_reasoning[section] = {"overall_comment": subfields}
             continue
+        
+        # Handle the REAL data structure from ResumeScorer
         detailed_reasoning[section] = {}
+        section_comment = None
+        subfield_scores_dict = {}
+        
         for subfield, data in subfields.items():
             if subfield == "comment" and isinstance(data, str):
-                detailed_reasoning[section][subfield] = data
-            elif isinstance(data, dict) and "comment" in data:
-                detailed_reasoning[section][subfield] = data["comment"]
+                # This is the main comment for the section
+                section_comment = data
             elif isinstance(data, (int, float)):
-                # Skip numeric scores, we only want comments
-                continue
+                # This is a score for a subfield
+                subfield_scores_dict[subfield] = data
+            elif isinstance(data, dict) and "comment" in data:
+                # Legacy format - preserve as is
+                detailed_reasoning[section][subfield] = data
             else:
                 # Handle other data types
                 print(f"Warning: Unexpected data type for {section}.{subfield}: {type(data)}")
+        
+        # Store the section data with comment and scores
+        if section_comment:
+            detailed_reasoning[section] = {
+                "comment": section_comment,
+                "scores": subfield_scores_dict
+            }
     
     # Generate overall assessment from comments
-    overall_assessment = generate_overall_assessment(detailed_reasoning)
+    overall_assessment = generate_overall_assessment(detailed_reasoning, advanced_result.get("section_weights", {}))
     
     # Extract experience and job requirement comments
     candidate_experience = advanced_result.get("candidate_experience", {})
@@ -485,22 +499,35 @@ def extract_comments_only(advanced_result: dict) -> dict:
         "job_requirements": job_requirements
     }
 
-def generate_overall_assessment(detailed_reasoning: dict) -> dict:
-    """Generate overall assessment from detailed reasoning"""
+def generate_overall_assessment(detailed_reasoning: dict, section_weights: dict) -> dict:
+    """Generate overall assessment from detailed reasoning using score-based extraction"""
     strengths = []
-    Shortfall_Areas = []
+    shortfall_areas = []
     
-    # Analyze comments to extract strengths and areas for improvement
-    for section, subfields in detailed_reasoning.items():
-        for subfield, comment in subfields.items():
-            if any(word in comment.lower() for word in ["strong", "excellent", "demonstrates", "proven", "significant"]):
-                strengths.append(f"{section.replace('_', ' ').title()}: {comment}")
-            elif any(word in comment.lower() for word in ["no", "limited", "missing", "lacks", "not mentioned"]):
-                Shortfall_Areas.append(f"{section.replace('_', ' ').title()}: {comment}")
+    # Extract strengths and shortfalls based on actual scores from non-zero weight sections
+    for section, data in detailed_reasoning.items():
+        if section_weights.get(section, 0) > 0:  # Only non-zero weight sections
+            if isinstance(data, dict) and "scores" in data:
+                comment = data.get("comment", "")
+                scores = data.get("scores", {})
+                
+                # Calculate average score for the section
+                if scores:
+                    avg_score = sum(scores.values()) / len(scores)
+                    if avg_score >= 1.5:  # High score = strength
+                        strengths.append(f"{section.replace('_', ' ').title()}: {comment}")
+                    else:  # Low score = shortfall
+                        shortfall_areas.append(f"{section.replace('_', ' ').title()}: {comment}")
+                else:
+                    # If no scores, use neutral categorization
+                    if any(word in comment.lower() for word in ["strong", "excellent", "demonstrates", "proven", "significant"]):
+                        strengths.append(f"{section.replace('_', ' ').title()}: {comment}")
+                    elif any(word in comment.lower() for word in ["no", "limited", "missing", "lacks", "not mentioned"]):
+                        shortfall_areas.append(f"{section.replace('_', ' ').title()}: {comment}")
     
     return {
-        "strengths": strengths[:5],  # Top 5 strengths
-        "Shortfall_Areas": Shortfall_Areas[:5],  # Top 5 areas
+        "strengths": strengths,  # All strengths, no limit
+        "Shortfall_Areas": shortfall_areas,  # All shortfalls, no limit
         "cultural_fit": "Candidate demonstrates strong collaborative skills and experience working in agile environments, suggesting good cultural fit for team-oriented organizations.",
         "growth_potential": "Strong technical foundation and continuous learning mindset indicate high potential for growth and advancement.",
         "risk_factors": "No significant risk factors identified. Candidate appears stable with consistent employment history and relevant experience."
