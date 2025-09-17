@@ -20,21 +20,11 @@ const generateWeightedSummary = (selectedResume, advancedAnalysis) => {
     const strengths = overallAssessment.strengths || [];
     const shortfalls = overallAssessment.Shortfall_Areas || [];
     
-    // Create section-specific insights
-    const sectionInsights = weightedSections.map(([section, weight]) => {
-        const sectionName = section.charAt(0).toUpperCase() + section.slice(1);
-        return `${sectionName} (${weight}% weight)`;
-    }).join(", ");
-    
     // Build the summary
     let summary = overallComment;
     
     if (strengths.length > 0) {
         summary += ` The candidate demonstrates ${strengths.slice(0, 2).join(" and ")}.`;
-    }
-    
-    if (sectionInsights) {
-        summary += ` Key focus areas based on job requirements include ${sectionInsights}.`;
     }
     
     if (shortfalls.length > 0) {

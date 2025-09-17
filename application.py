@@ -441,6 +441,29 @@ def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, file
         # Fallback to current system
         return analyze_resume_with_ai(job_description, resume_text, filename)
 
+
+def cleanup_experience_comment(comment: str) -> str:
+    """Clean up verbose experience comments to be more concise"""
+    if "Candidate:" in comment and "Job requires:" in comment:
+        # Extract key information
+        import re
+        
+        # Extract years and gap
+        years_match = re.search(r'Candidate: ([\d.]+) years', comment)
+        gap_match = re.search(r'gap: ([-\d.]+) months', comment)
+        
+        if years_match and gap_match:
+            years = years_match.group(1)
+            gap = gap_match.group(1)
+            
+            if float(gap) < 0:
+                return f"Candidate has {years} years of experience and exceeds requirement (gap: {gap} months)"
+            else:
+                return f"Candidate has {years} years of experience (gap: {gap} months)"
+    
+    return comment
+
+
 def extract_comments_only(advanced_result: dict) -> dict:
     """Extract only comments and reasoning from advanced scoring result"""
     detailed_reasoning = {}
@@ -480,6 +503,10 @@ def extract_comments_only(advanced_result: dict) -> dict:
         
         # Store the section data with comment and scores
         if section_comment:
+            # Clean up experience comments to be more concise
+            if section == "experience":
+                section_comment = cleanup_experience_comment(section_comment)
+            
             detailed_reasoning[section] = {
                 "comment": section_comment,
                 "scores": subfield_scores_dict
