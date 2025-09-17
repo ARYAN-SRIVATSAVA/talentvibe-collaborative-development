@@ -460,6 +460,21 @@ def cleanup_experience_comment(comment: str) -> str:
                 return f"Candidate has {years} years of experience and exceeds requirement (gap: {gap} months)"
             else:
                 return f"Candidate has {years} years of experience (gap: {gap} months)"
+        
+        # Handle cases where gap is not in the expected format
+        # Look for "Short by" or "Meets or exceeds" patterns
+        short_match = re.search(r'Short by ([\d.]+) months', comment)
+        exceeds_match = re.search(r'Meets or exceeds requirement', comment)
+        
+        if years_match:
+            years = years_match.group(1)
+            if short_match:
+                gap = short_match.group(1)
+                return f"Candidate has {years} years of experience (gap: {gap} months)"
+            elif exceeds_match:
+                return f"Candidate has {years} years of experience and exceeds requirement"
+            else:
+                return f"Candidate has {years} years of experience"
     
     return comment
 

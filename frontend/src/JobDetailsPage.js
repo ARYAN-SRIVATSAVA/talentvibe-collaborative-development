@@ -8,13 +8,7 @@ import './JobsPage.css';
 
 const generateWeightedSummary = (selectedResume, advancedAnalysis) => {
     const overallComment = selectedResume.analysis?.reasoning || "No analysis available";
-    const sectionWeights = advancedAnalysis?.section_weights || {};
     const overallAssessment = advancedAnalysis?.overall_assessment || {};
-    
-    // Get sections with non-zero weights
-    const weightedSections = Object.entries(sectionWeights)
-        .filter(([section, weight]) => weight > 0)
-        .sort(([,a], [,b]) => b - a); // Sort by weight descending
     
     // Build strengths and shortfalls
     const strengths = overallAssessment.strengths || [];
