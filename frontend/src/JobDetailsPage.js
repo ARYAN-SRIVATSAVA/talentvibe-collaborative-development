@@ -8,8 +8,8 @@ import './JobsPage.css';
 
 const generateWeightedSummary = (selectedResume, advancedAnalysis) => {
     const overallComment = selectedResume.analysis?.reasoning || "No analysis available";
-    const overallAssessment = advancedAnalysis?.overall_assessment || {};
-    
+    const overallAssessment = advancedAnalysis?.filtered_overall_assessment || advancedAnalysis?.overall_assessment || {};
+    // Use filtered assessment (non-zero weight sections only) for summary, fallback to all sections    
     // Build strengths and shortfalls
     const strengths = overallAssessment.strengths || [];
     const shortfalls = overallAssessment.Shortfall_Areas || [];
