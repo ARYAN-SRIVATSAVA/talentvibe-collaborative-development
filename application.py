@@ -428,7 +428,9 @@ def analyze_resume_with_advanced_ai(job_description: str, resume_text: str, file
             "experience_education_ratio": advanced_result.get("experience_education_ratio", 0.0),
             "processing_time": advanced_result.get("processing_time", 0.0),
             "detailed_reasoning": advanced_comments["detailed_reasoning"],
+            "filtered_detailed_reasoning": advanced_comments["filtered_detailed_reasoning"],
             "overall_assessment": advanced_comments["overall_assessment"],
+            "filtered_overall_assessment": advanced_comments["filtered_overall_assessment"],
             "candidate_experience": advanced_comments["candidate_experience"],
             "job_requirements": advanced_comments["job_requirements"]
         }
