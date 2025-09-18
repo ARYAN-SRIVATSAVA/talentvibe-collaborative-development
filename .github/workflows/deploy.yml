@@ -148,11 +148,24 @@ jobs:
     if: always()
     
     steps:
+    - name: Configure AWS credentials for notification
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2
+        
     - name: Notify deployment status
       run: |
         if [ "${{ needs.build-and-deploy.result }}" == "success" ]; then
+          # Get the actual environment URL
+          ENVIRONMENT_URL=$(aws elasticbeanstalk describe-environments \
+            --environment-names talentvibe-collaborative-development \
+            --query "Environments[0].CNAME" \
+            --output text)
+          
           echo "🎉 Deployment successful!"
-          echo "Your application is now live at: http://talentvibe-v2-deployment-env.eba-sayeppgb.us-east-2.elasticbeanstalk.com/"
+          echo "Your application is now live at: http://$ENVIRONMENT_URL/"
         else
           echo "❌ Deployment failed!"
           echo "Check the logs above for more details."
