@@ -1,4 +1,4 @@
-name: Deploy TalentVibe V2 to AWS Elastic Beanstalk
+name: Deploy TalentVibe Collaborative Development to AWS Elastic Beanstalk
 
 on:
   push:
@@ -106,7 +106,7 @@ jobs:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: TalentVibe-deployment
-        environment_name: TalentVibe-v2-deployment-env
+        environment_name: talentvibe-collaborative-development
         version_label: "v-${{ github.run_number }}-${{ github.sha }}"
         region: us-east-2
         deployment_package: talentvibe-deployment.zip
@@ -120,7 +120,7 @@ jobs:
         
         # Get the environment URL
         ENVIRONMENT_URL=$(aws elasticbeanstalk describe-environments \
-          --environment-names TalentVibe-v2-deployment-env \
+          --environment-names talentvibe-collaborative-development \
           --query "Environments[0].CNAME" \
           --output text)
         
